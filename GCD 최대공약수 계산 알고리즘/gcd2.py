@@ -11,6 +11,6 @@ def gcd(a,b):
   print('while count : ', whileIndex)
   return a+b
 
-result = print('최대공약수 gcd : ', gcd(2,100))
+result = f'최대공약수 gcd : {gcd(2,100)}'
 
 print(result)
