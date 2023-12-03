@@ -35,11 +35,4 @@ class Stack:
       return self.items[-1]
     else: # 답변 코드에서 조건 추가 
       print('Stack is empty') 
-  
-s=Stack()
-s.push(10)
-s.push(2)
-
-print(s.pop()) # 2
-print(s.top()) # 10
-print(len(s)) # 1
+      
