@@ -1,6 +1,7 @@
 import sys
 sys.path.append('../stack 괄호 맞추기')
 from stack import Stack
+from match import check_match_brackets
 
 # infix 형식으로 작성된 표현식을 받아서 
 # postfix 형식으로 변경하여 넘겨주는 함수 
@@ -9,6 +10,12 @@ from stack import Stack
 def change_to_postfix(infix_string, show_steps=True):
   # 넘어온 문자열을 출력하여 표시한다.(확인용)
   print('infix : ', infix_string)
+  
+  # 넘어온 문자열의 괄호가 올바르게 되어 있는지 우선 확인한다
+  if not check_match_brackets(infix_string, show_steps):
+    raise ValueError(f"error : brackets are mismatched")
+    return None
+  
   # postfix로 변경되어 저장될 Stack(1-postfix)을 준비한다. 
   stack_for_postfix = Stack()
   # postfix로 변경하기 전 피연산자들의 우선순위에 따라 임시 저장할 Stack(2-operator)을 준비한다.
