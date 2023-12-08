@@ -132,12 +132,3 @@ def change_to_postfix(infix_string, show_steps=True):
   # Stack(1-postfix)을 넘겨주고 함수실행을 종료한다
   return stack_for_postfix
 
-
-
-
-# str = '1+2*3' # 123*+
-# str = '(1*2)+3' # 12*3+
-# str = '(1+2)*3' # 12+3*
-str = '(1+2)+3*4/5+(6*7-8)' # 12+34*5/67*8-++ # 39.4
-# print(change_to_postfix(str))
-print('postfix : ', change_to_postfix(str, False))
