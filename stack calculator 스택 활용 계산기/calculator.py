@@ -139,7 +139,22 @@ def change_to_postfix(infix_string, show_steps=False):
 
 def calculate_postfix(stack_postfix, show_steps=False):
   print('postfix : ', stack_postfix)
-  return ''
+  # 피연산자 스택 준비
+  # 계산완료 결과값
+  cal_result = 0
+  # postfix의 첫번째 문자열(토큰이라 부른다)부터 마지막 문자열까지 아래 작업(1)을 반복한다
+    # 토큰이 피연산자이면
+      # 피연산자 스택에 push한다
+      # continue
+    
+    # 토큰이 연산자이면
+      # (예외 추가) 피연산자가 2개이상 남아 있지 않으면 오류
+      # 피연산자 스택에서 두번 pop한 후 
+      # 첫번째 pop은 오른쪽 / 두번째 pop은 왼쪽 
+      # 두 피연산자를 연산자로 계산한다
+      # 계산한 결과값을 피연산자 스택에 push한다
+      # continue
+  return cal_result
 
 # change_to_postfix() + calculate_postfix()
 def calulate_infix(infix_string, show_steps=False):
