@@ -132,3 +132,10 @@ def change_to_postfix(infix_string, show_steps=False):
   # Stack(1-postfix)을 넘겨주고 함수실행을 종료한다
   return stack_for_postfix
 
+def calculate_postfix(stack_postfix, show_steps=False):
+  print('postfix : ', stack_postfix)
+  return ''
+
+# change_to_postfix() + calculate_postfix()
+def calulate_infix(infix_string, show_steps=False):
+  return calculate_postfix(change_to_postfix(infix_string, show_steps), show_steps)
