@@ -1,14 +1,26 @@
 import sys
 sys.path.append('../stack 괄호 맞추기')
 from stack import Stack
+from match import check_match_brackets
 
 # infix 형식으로 작성된 표현식을 받아서 
 # postfix 형식으로 변경하여 넘겨주는 함수 
 # 제한 1 : 한자리 수의 피연산자로 제한 
 # 제한 2 : 단항연산자(음수/양수 표시)는 고려하지 않는다
-def change_to_postfix(infix_string, show_steps=True):
+def change_to_postfix(infix_string, show_steps=False):
   # 넘어온 문자열을 출력하여 표시한다.(확인용)
   print('infix : ', infix_string)
+  
+  # 넘어온 문자열의 괄호가 올바르게 되어 있는지 우선 확인한다
+  if show_steps : print('Check match brackets first')
+  if not check_match_brackets(infix_string, show_steps):
+    if show_steps : 
+      print('----error----')
+      print('brackets are mismatched')
+    raise ValueError(f"error : brackets are mismatched")
+    return None
+  if show_steps : print('Verified brackets are matched')
+  
   # postfix로 변경되어 저장될 Stack(1-postfix)을 준비한다. 
   stack_for_postfix = Stack()
   # postfix로 변경하기 전 피연산자들의 우선순위에 따라 임시 저장할 Stack(2-operator)을 준비한다.
@@ -125,12 +137,51 @@ def change_to_postfix(infix_string, show_steps=True):
   # Stack(1-postfix)을 넘겨주고 함수실행을 종료한다
   return stack_for_postfix
 
+def calculate_postfix(stack_postfix, show_steps=False):
+  print('postfix : ', stack_postfix)
+  # 피연산자 스택 준비
+  stack_for_operand = Stack()
+  # 계산완료 결과값
+  cal_result = 0
+  # postfix의 첫번째 문자열(토큰이라 부른다)부터 마지막 문자열까지 아래 작업(1)을 반복한다
+  token_index = 0
+  while token_index < len(stack_postfix):
+    current_token = stack_postfix[token_index]
+    # 토큰이 피연산자이면
+    if current_token.isdigit():
+      # 피연산자 스택에 push한다
+      stack_for_operand.push(current_token)
+      token_index += 1
+      continue
+    
+    # 토큰이 연산자이면
+    if current_token in ('+','-','*','/'):
+      # (예외 추가) 피연산자가 2개이상 남아 있지 않으면 오류
+      if len(stack_for_operand) < 2:
+        raise ValueError(f"error : operands count < 2 ")
+        break
+      # 피연산자 스택에서 두번 pop한 후 
+      # 첫번째 pop은 오른쪽 / 두번째 pop은 왼쪽 
+      right_operand = float(stack_for_operand.pop())
+      left_operand = float(stack_for_operand.pop())
+      temp_result = 0
+      # 두 피연산자를 연산자로 계산한다
+      if current_token == '+':
+        temp_result = left_operand + right_operand
+      elif current_token == '-':
+        temp_result = left_operand - right_operand
+      elif current_token == '*':
+        temp_result = left_operand * right_operand
+      elif current_token == '/':
+        temp_result = left_operand / right_operand
+      # 계산한 결과값을 피연산자 스택에 push한다
+      stack_for_operand.push(temp_result)
+      token_index += 1
+      continue
+    
+  cal_result = stack_for_operand.pop()
+  return cal_result
 
-
-
-# str = '1+2*3' # 123*+
-# str = '(1*2)+3' # 12*3+
-# str = '(1+2)*3' # 12+3*
-str = '(1+2)+3*4/5+(6*7-8)' # 12+34*5/67*8-++ # 39.4
-# print(change_to_postfix(str))
-print('postfix : ', change_to_postfix(str, False))
+# change_to_postfix() + calculate_postfix()
+def calulate_infix(infix_string, show_steps=False):
+  return calculate_postfix(change_to_postfix(infix_string, show_steps), show_steps)
