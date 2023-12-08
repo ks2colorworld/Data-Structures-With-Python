@@ -6,7 +6,7 @@ from stack import Stack
 # postfix 형식으로 변경하여 넘겨주는 함수 
 # 제한 1 : 한자리 수의 피연산자로 제한 
 # 제한 2 : 단항연산자(음수/양수 표시)는 고려하지 않는다
-def change_to_postfix(infix_string):
+def change_to_postfix(infix_string, show_steps=True):
   # 넘어온 문자열을 출력하여 표시한다.(확인용)
   print('infix : ', infix_string)
   # postfix로 변경되어 저장될 Stack(1-postfix)을 준비한다. 
@@ -18,14 +18,15 @@ def change_to_postfix(infix_string):
   token_index = 0
   while token_index < len(infix_string):
     current_token = infix_string[token_index]
-    print('current_token : ', current_token)
+    if show_steps : print('current_token : ', current_token)
     # 토큰이 피연산자(숫자)이면 
     if current_token.isdigit():
       # 해당 토큰을 Stack(1-postfix)에 push하고 아래 작업은 더이상 실행하지 않고 다음 토큰에 대한 작업(3)을 다시 진행한다 
       stack_for_postfix.push(current_token)
-      print('----1----')
-      print(stack_for_postfix)
-      print(stack_for_operator)
+      if show_steps : 
+        print('----1----')
+        print(stack_for_postfix)
+        print(stack_for_operator)
       token_index += 1
       continue
     
@@ -33,9 +34,10 @@ def change_to_postfix(infix_string):
     if current_token == '(':
       # 해당 토큰을 Stack(2-operator)에 push하고 아래 작업은 더이상 실행하지 않고 다음 토큰에 대한 작업(3)을 다시 진행한다 
       stack_for_operator.push(current_token)
-      print('----2----')
-      print(stack_for_postfix)
-      print(stack_for_operator)
+      if show_steps : 
+        print('----2----')
+        print(stack_for_postfix)
+        print(stack_for_operator)
       token_index += 1
       continue
     
@@ -62,9 +64,10 @@ def change_to_postfix(infix_string):
           # repeat_condition = False
           # break
       # 작업(4)이 오류없이 중단되었으면 아래 작업은 더이상 실행하지 않고 다음 토큰에 대한 작업(3)을 다시 진행한다 
-      print('----3----')
-      print(stack_for_postfix)
-      print(stack_for_operator)
+      if show_steps : 
+        print('----3----')
+        print(stack_for_postfix)
+        print(stack_for_operator)
       token_index += 1
       continue
     
@@ -73,9 +76,10 @@ def change_to_postfix(infix_string):
       # (추가) stack_for_operator이 비어 있으면 현재 토큰을 push하고 다음 토큰에 대한 작업(3)을 다시 진행한다 
       if stack_for_operator.is_empty():
         stack_for_operator.push(current_token)
-        print('----4----')
-        print(stack_for_postfix)
-        print(stack_for_operator)
+        if show_steps : 
+          print('----4----')
+          print(stack_for_postfix)
+          print(stack_for_operator)
         token_index += 1
         continue
       # 토큰의 우선순위에 따라 아래 작업(5)을 반복한다
@@ -100,9 +104,10 @@ def change_to_postfix(infix_string):
           break
         
     # 아래 작업은 더이상 실행하지 않고 다음 토큰에 대한 작업(3)을 다시 진행한다 
-    print('----5----')
-    print(stack_for_postfix)
-    print(stack_for_operator)
+    if show_steps : 
+      print('----5----')
+      print(stack_for_postfix)
+      print(stack_for_operator)
     token_index += 1
     # continue
   
@@ -110,9 +115,10 @@ def change_to_postfix(infix_string):
   while not stack_for_operator.is_empty():
     # Stack(2-operator)를 pop한 후 Stack(1-postfix)에 push한다
     stack_for_postfix.push(stack_for_operator.pop())
-    print('----6----')
-    print(stack_for_postfix)
-    print(stack_for_operator)
+    if show_steps : 
+      print('----6----')
+      print(stack_for_postfix)
+      print(stack_for_operator)
     
   
   # infix형식으로 넘어온 문자열이 전부 postfix로 변경되면
@@ -125,5 +131,6 @@ def change_to_postfix(infix_string):
 # str = '1+2*3' # 123*+
 # str = '(1*2)+3' # 12*3+
 # str = '(1+2)*3' # 12+3*
-str = '(1+2)+3*4/5+(6*7-8)' # ?? 
-print(change_to_postfix(str))
+str = '(1+2)+3*4/5+(6*7-8)' # 12+34*5/67*8-++ # 39.4
+# print(change_to_postfix(str))
+print('postfix : ', change_to_postfix(str, False))
