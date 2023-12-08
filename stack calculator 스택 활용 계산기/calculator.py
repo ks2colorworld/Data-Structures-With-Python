@@ -7,7 +7,7 @@ from match import check_match_brackets
 # postfix 형식으로 변경하여 넘겨주는 함수 
 # 제한 1 : 한자리 수의 피연산자로 제한 
 # 제한 2 : 단항연산자(음수/양수 표시)는 고려하지 않는다
-def change_to_postfix(infix_string, show_steps=True):
+def change_to_postfix(infix_string, show_steps=False):
   # 넘어온 문자열을 출력하여 표시한다.(확인용)
   print('infix : ', infix_string)
   
