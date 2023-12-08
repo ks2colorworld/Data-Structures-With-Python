@@ -39,3 +39,6 @@ class Stack:
   def __str__(self):
     # return ''.join(self.items) 
     return ''.join(map(str, self.items)) # 숫자 문자열 
+  
+  def __getitem__(self, index):
+    return self.items[index]
