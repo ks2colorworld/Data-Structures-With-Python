@@ -20,7 +20,3 @@ def check_match_brackets(str):
 
   if len(S) > 0: return False
   else: return True
-
-# str = '(2+5)*7-((3-1)/2+7)'
-str = '())' # false 
-print(check_match_brackets(str))
