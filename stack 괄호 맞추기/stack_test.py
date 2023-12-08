@@ -10,3 +10,5 @@ print(len(s)) # 1
 print(s.pop2())
 print(s.pop())
 print(s.pop2())
+
+print(s)

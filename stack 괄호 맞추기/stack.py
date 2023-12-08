@@ -35,4 +35,7 @@ class Stack:
       return self.items[-1]
     else: # 답변 코드에서 조건 추가 
       print('Stack is empty') 
-      
+
+  def __str__(self):
+    # return ''.join(self.items) 
+    return ''.join(map(str, self.items)) # 숫자 문자열 
