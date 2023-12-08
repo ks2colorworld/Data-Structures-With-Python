@@ -12,9 +12,14 @@ def change_to_postfix(infix_string, show_steps=False):
   print('infix : ', infix_string)
   
   # 넘어온 문자열의 괄호가 올바르게 되어 있는지 우선 확인한다
+  if show_steps : print('Check match brackets first')
   if not check_match_brackets(infix_string, show_steps):
+    if show_steps : 
+      print('----error----')
+      print('brackets are mismatched')
     raise ValueError(f"error : brackets are mismatched")
     return None
+  if show_steps : print('Verified brackets are matched')
   
   # postfix로 변경되어 저장될 Stack(1-postfix)을 준비한다. 
   stack_for_postfix = Stack()
