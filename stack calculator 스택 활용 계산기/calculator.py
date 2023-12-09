@@ -14,9 +14,7 @@ def change_to_postfix(infix_string, show_steps=False):
   # 넘어온 문자열의 괄호가 올바르게 되어 있는지 우선 확인한다
   if show_steps : print('Check match brackets first')
   if not check_match_brackets(infix_string, show_steps):
-    if show_steps : 
-      print('----error----')
-      print('brackets are mismatched')
+    if show_steps : show_steps_message('error', 'brackets are mismatched')
     raise ValueError(f"error : brackets are mismatched")
     return None
   if show_steps : print('Verified brackets are matched')
@@ -35,10 +33,7 @@ def change_to_postfix(infix_string, show_steps=False):
     if current_token.isdigit():
       # 해당 토큰을 Stack(1-postfix)에 push하고 아래 작업은 더이상 실행하지 않고 다음 토큰에 대한 작업(3)을 다시 진행한다 
       stack_for_postfix.push(current_token)
-      if show_steps : 
-        print('----1----')
-        print(stack_for_postfix)
-        print(stack_for_operator)
+      if show_steps : show_steps_message('1', stack_for_postfix, stack_for_operator)
       token_index += 1
       continue
     
@@ -46,10 +41,7 @@ def change_to_postfix(infix_string, show_steps=False):
     if current_token == '(':
       # 해당 토큰을 Stack(2-operator)에 push하고 아래 작업은 더이상 실행하지 않고 다음 토큰에 대한 작업(3)을 다시 진행한다 
       stack_for_operator.push(current_token)
-      if show_steps : 
-        print('----2----')
-        print(stack_for_postfix)
-        print(stack_for_operator)
+      if show_steps : show_steps_message('2', stack_for_postfix, stack_for_operator)
       token_index += 1
       continue
     
@@ -76,10 +68,7 @@ def change_to_postfix(infix_string, show_steps=False):
           # repeat_condition = False
           # break
       # 작업(4)이 오류없이 중단되었으면 아래 작업은 더이상 실행하지 않고 다음 토큰에 대한 작업(3)을 다시 진행한다 
-      if show_steps : 
-        print('----3----')
-        print(stack_for_postfix)
-        print(stack_for_operator)
+      if show_steps : show_steps_message('3', stack_for_postfix, stack_for_operator)
       token_index += 1
       continue
     
@@ -88,10 +77,7 @@ def change_to_postfix(infix_string, show_steps=False):
       # (추가) stack_for_operator이 비어 있으면 현재 토큰을 push하고 다음 토큰에 대한 작업(3)을 다시 진행한다 
       if stack_for_operator.is_empty():
         stack_for_operator.push(current_token)
-        if show_steps : 
-          print('----4----')
-          print(stack_for_postfix)
-          print(stack_for_operator)
+        if show_steps : show_steps_message('4', stack_for_postfix, stack_for_operator)
         token_index += 1
         continue
       # 토큰의 우선순위에 따라 아래 작업(5)을 반복한다
@@ -100,26 +86,25 @@ def change_to_postfix(infix_string, show_steps=False):
         # 토큰 '*','/'의 우선순위는 '+','-'의 우선순위보다 높다 
         # Stack(2-operator)의 top을 확인하고 토큰과의 우선순위를 비교한다 
         top_operator = stack_for_operator.top()
-        pop_condition = top_operator in ('*','/') # todo : 조건 검정할 것 
+        pop_condition = top_operator in ('*','/') # todo : 조건 검정할 것 ok
         # Stack(2-operator)의 top의 우선순위가 토큰보다 높거나 같으면 
         if pop_condition:
           # Stack(2-operator)를 pop하여 Stack(1-postfix)에 push한다
           stack_for_postfix.push(stack_for_operator.pop())
+          if show_steps : show_steps_message('5-1', stack_for_postfix, stack_for_operator)
           # 작업(5)를 다시 진행한다
           continue
         # Stack(2-operator)의 top의 우선순위가 토큰보다 낮으면 
         else:
           # 해당 토큰을 Stack(2-operator)에 push한다 
           stack_for_operator.push(current_token)
+          if show_steps : show_steps_message('5-2', stack_for_postfix, stack_for_operator)
           # 작업(5)을 중단한다
           repeat_condition = False
           break
         
     # 아래 작업은 더이상 실행하지 않고 다음 토큰에 대한 작업(3)을 다시 진행한다 
-    if show_steps : 
-      print('----5----')
-      print(stack_for_postfix)
-      print(stack_for_operator)
+    # if show_steps : show_steps_message('5-3', stack_for_postfix, stack_for_operator)
     token_index += 1
     # continue
   
@@ -127,10 +112,7 @@ def change_to_postfix(infix_string, show_steps=False):
   while not stack_for_operator.is_empty():
     # Stack(2-operator)를 pop한 후 Stack(1-postfix)에 push한다
     stack_for_postfix.push(stack_for_operator.pop())
-    if show_steps : 
-      print('----6----')
-      print(stack_for_postfix)
-      print(stack_for_operator)
+    if show_steps : show_steps_message('last(7)', stack_for_postfix, stack_for_operator)
     
   
   # infix형식으로 넘어온 문자열이 전부 postfix로 변경되면
@@ -185,3 +167,10 @@ def calculate_postfix(stack_postfix, show_steps=False):
 # change_to_postfix() + calculate_postfix()
 def calulate_infix(infix_string, show_steps=False):
   return calculate_postfix(change_to_postfix(infix_string, show_steps), show_steps)
+
+def show_steps_message(title_string, *steps_message):
+  print(f'----{title_string}----')
+  if len(steps_message) <= 0: return
+  for msg in steps_message:
+    print(msg)
+  return
