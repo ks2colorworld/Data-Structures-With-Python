@@ -1,7 +1,7 @@
 from queue import Queue
 from my_queue import My_Queue
 
-def josephus(n,k):
+def josephus(n,k,q=None):
   print(f'n={n}, k={k}')
   # 1~n만큼의 숫자들 중 최종 남는 번호(숫자)
   num_final = 0
@@ -10,7 +10,7 @@ def josephus(n,k):
     print('required 0 < n and 0 < k')
     return num_final
   
-  q = Queue()
+  if q == None : q = Queue() # 특정 queue가 없으면 파이썬 기본 큐를 사용한다
   for i in range(n):
     q.put(i+1)
   print(list(q.queue)) 
@@ -34,4 +34,6 @@ def josephus(n,k):
 
 n = 9
 k = 3
-print(josephus(n,k)) 
+# print(josephus(n,k)) 
+q = My_Queue() # 강의 내용에서 구현한 queue 
+print(josephus(n,k,q))
