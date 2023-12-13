@@ -4,6 +4,7 @@ class MySinglyLinkedList:
   def __init__(self):
     self.size = 0
     self.head = None
+    self.current = None
   def pushFront(self,key=None): # BigO(1)
     if key == None:
       self.size = 0
@@ -66,6 +67,24 @@ class MySinglyLinkedList:
     # del tail
     self.size -= 1
     return tail
+  def search(self, key):
+    v = self.head
+    while v != None:
+      if v.key == key:
+        break
+      v = v.next
+    return v # None
+  def __iter__(self): # for x in L: print(x) 
+    self.current = self.head
+    return self
+  def __next__(self):
+    if self.current is not None:
+      x = self.current
+      self.current = x.next
+      # yield x # def __iterator__(self): 강의에서의 예시와 파이썬 문법이 상당히 다름.
+      return x
+    else:
+      raise StopIteration
   def __len__(self):
     return self.size
   def __str__(self):
