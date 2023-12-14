@@ -7,6 +7,8 @@ head:node[None], size:0
 (tailNode)<-DummyNode->(headNode)
 '''
 
+print('-1--------------')
+
 h = Node()
 a = Node(1)
 h.next = a
@@ -35,7 +37,7 @@ x.next = h2
 x.prev = h2
 # '''
 
-# L.splice(a,b,x)
+L.splice(a,b,x)
 
 
 L.pushFront(3)
@@ -53,3 +55,41 @@ print(L)
 head:node[None], size:4
 (tailNode)<-DummyNode<->node[3]<->node[-1]<->node[5]<->node[9]->(headNode)
 #'''
+
+print('-2--------------')
+
+for a in L :
+  if a.key == 3:
+    print(a)
+
+print('-3--------------')
+
+print(L.search(-1))
+# print(L.__current)
+print(L.search(8))
+# print(L.__current)
+# L.remove(L.search(-1))
+# print(L)
+print(L.popBack())
+print(L)
+print(L.popFront())
+print(L)
+
+print('-4--------------')
+
+M = DoublyLinkedList()
+M.pushFront(100)
+M.pushFront(200)
+M.pushFront(300)
+
+L.join(M)
+print(L)
+
+print('-5--------------')
+
+n_5 = L.search(5)
+# print(n_5)
+# K = L.split(n_5)
+K = L.split(L.search(1))
+print(L)
+print(K)

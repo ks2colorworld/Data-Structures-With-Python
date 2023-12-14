@@ -13,14 +13,14 @@ class DoublyLinkedList:
   def __init__(self) -> None:
     self.head = Node() # head node 혹은 dummy node 
     self.size = 0
-    self.current = None
+    self.__current = None # private 변수로 변경
   def __iter__(self):
-    self.current = self.head.next # head is dummy (None)
+    self.__current = self.head.next # head is dummy (None)
     return self
   def __next__(self):
-    if self.current.key != None:
-      x = self.current
-      self.current = x.next
+    if self.__current.key != None:
+      x = self.__current
+      self.__current = x.next
       return x
     else:
       raise StopIteration
@@ -118,3 +118,80 @@ class DoublyLinkedList:
     self.insertAfter(self.head,a)
   def pushNodeBack(self,a:Node):
     self.insertBefore(self.head,a)
+    
+  def search(self,key)->Node:
+    i=None
+    # ''' 구현된 __iter__ 문법 활용
+    for a in self:
+      if a.key == key:
+        i = a 
+        break
+    # '''
+    ''' 강의 내용 기준
+    v = self.head
+    while v.next != self.head:
+      if v.key == key:
+        i = v
+        break
+      v = v.next
+    # '''
+    return i 
+  def remove(self,x:Node)->None:
+    if x == None or x == self.head:
+      return
+    x.prev.next = x.next
+    x.next.prev = x.prev
+    self.size -= 1
+  def popFront(self)->Node:
+    if len(self) == 0:
+      return None
+    v = self.head.next
+    self.remove(v) # self.size -= 1
+    return v
+  def popBack(self)->Node:
+    if len(self) == 0:
+      return None
+    v = self.head.prev
+    self.remove(v) # self.size -= 1
+    return v
+  def join(self,x:'DoublyLinkedList')->'DoublyLinkedList':
+    if x == None or len(x) == 0:
+      return self
+    selfTail = self.head.prev
+    xFront = x.head.next
+    xTail = x.head.prev
+    
+    self.head.prev = xTail
+    xTail.next = self.head
+    selfTail.next = xFront
+    xFront.prev = selfTail
+    self.size += x.size
+  def split(self,a:Node)->'DoublyLinkedList':
+    """a 노드부터 tail 노드까지 잘라내서 새로운 양방향연결리스트로 반환한다.
+
+    Args:
+        a (Node): 잘라낼 리스트의 맨 첫번째 노드 
+
+    Returns:
+        DoublyLinkedList: 잘라낸 양방향연결리스트
+    """
+    X = DoublyLinkedList()
+    if a == None:
+      return X
+    
+    selfTail = a.prev
+    XTail = self.head.prev
+    
+    a.prev = X.head
+    X.head.next = a 
+    
+    X.head.prev = XTail
+    XTail.next = X.head
+    
+    self.head.prev = selfTail
+    selfTail.next = self.head
+    
+    for _ in X:
+      X.size += 1
+    self.size -= X.size
+    return X
