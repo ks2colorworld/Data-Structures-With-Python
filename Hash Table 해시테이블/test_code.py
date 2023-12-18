@@ -13,7 +13,11 @@ print(table[index])
 print(table[index][0])
 #'''
 
-# '''
+
+
+
+
+'''
 
 from my_hash_table1 import HashTable
 
@@ -52,6 +56,10 @@ print(ht.search(key2))
 
 #'''
 
+
+
+
+
 '''
 from my_hash_table1 import HashTable
 
@@ -81,4 +89,46 @@ print(f'ht.remove({key})')
 print('remove key : ',ht.remove(key))
 print(ht.table)
 print(ht.search(key2))
+#'''
+
+
+
+
+
+# '''
+from chaning_hash_table import HashTableC
+
+ht = HashTableC() # size : 10
+
+ht.set(2,'A2')
+ht.set(3,'A3')
+ht.set(102,'B2')
+ht.set(5,'A5')
+ht.set(105,'B5')
+ht.set(10102,'C2')
+ht.set(9,'A9')
+ht.set(109,'B9')
+
+ht.set(10109,'C9')
+ht.set(1010109,'D9')
+
+print(ht.table[2])
+
+key = 2 # A2
+key2 = 102 # B2
+print(f'ht.remove({key})')
+print('remove key : ',ht.remove(key))
+print(ht.table[2])
+print(ht.search(key2).value)
+
+print(ht.search(1010109).value)
+print(ht.table[9])
+
+# key = 9 # A9
+# key2 = 109 # B9
+# print(f'ht.remove({key})')
+# print('remove key : ',ht.remove(key))
+# print(ht.table)
+# print(ht.search(key2))
+
 #'''

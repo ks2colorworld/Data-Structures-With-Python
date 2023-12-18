@@ -5,19 +5,19 @@ class MySinglyLinkedList:
     self.size = 0
     self.head = None
     self.current = None
-  def pushFront(self,key=None): # BigO(1)
+  def pushFront(self,key=None,value=None): # BigO(1)
     if key == None:
       self.size = 0
       self.head = None
       return 
-    new_node = MyNode(key)
+    new_node = MyNode(key,value)
     new_node.next = self.head
     self.head = new_node
     self.size += 1
-  def pushBack(self, key=None): # BigO(n)
+  def pushBack(self, key=None,value=None): # BigO(n)
     if key == None:
       return
-    new_node = MyNode(key) # new_node.next = None
+    new_node = MyNode(key,value) # new_node.next = None
     if len(self) == 0:
       self.size = 1
       self.head = new_node
@@ -74,6 +74,22 @@ class MySinglyLinkedList:
         break
       v = v.next
     return v # None
+  def delete(self,key):
+    if len(self) == 0:
+      return None
+    prev = None
+    v = self.head
+    while v != None:
+      if v.key == key:
+        if prev is not None:
+          prev.next = v.next
+        else:
+          self.head = v.next
+        self.size -= 1
+        break
+      prev = v
+      v = v.next
+    return v # x.key
   def __iter__(self): # for x in L: print(x) 
     self.current = self.head
     return self
