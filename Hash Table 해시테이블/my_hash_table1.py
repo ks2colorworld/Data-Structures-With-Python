@@ -55,9 +55,10 @@ class HashTable:
     6.그 slot(index2)가 비어 있는지 확인한다. unoccupied(index2)
     7-1.(비어 있다) find-slot(key1)로 찾은 맨마지막 slot(index1)을 비웠고(4-2.), 그 다음도 비어 있으므로 코드 진행을 종료한다.
     7-2.(비어 있지 않다) slot(index2)의 키값(key3)을 확인한다.
-    8.이 키값(key3)이 저장될 원래 slot(index0)을 확인(index0=hash_function(key3))한 후 index0과 index1값과 같은지 확인한다.
-    9-1.(같지 않다) probe()함수로 저장위치가 이동된 대상이 아니므로, 작업대상을 다음 slot(index3)으로 변경 후(5.probe(index2)) 6.부터 반복한다.
-    9-2.(같다) slot(index1)에 slot(index2)의 key/value를 옮기고 slot(index2)를 비운 후(4-2.) 5.부터 반복한다.
+    8.이 키값(key3)이 저장될 원래 slot(index0)을 확인(index0=hash_function(key3))한 후 index0값과 index1값과 index2값의 조건을 확인한다.
+    9-1.(index0<index1<=index2)이거나 (index1<=index2<index0)이거나 (index2<index0<index1)이면, 10.을 수행한다.
+    9-2.(9-1의 조건에 만족하지 않다) probe()함수로 저장위치가 이동된 대상이 아니므로, 작업대상을 다음 slot(index3)으로 변경 후(5.probe(index2)) 6.부터 반복한다.
+    10.slot(index1)에 slot(index2)의 key/value를 옮기고 slot(index2)를 비운 후(4-2.) 5.부터 반복한다.
     #'''
     H = self.table
     # 1.이 키(key)에 해당되는 slot(i)을 찾는다 : find-slot(key) - 찾으면 해당 slot의 index를 반환하고, 못 찾으면 set할 수 있는 slot의 index를 반환한다.
@@ -80,18 +81,19 @@ class HashTable:
         if self.__unoccupied(j): return key # 삭제한 key값을 반환한 후 함수 종료
         # 7-2.(비어 있지 않다) slot(j)의 키값(j_key)을 확인한다.
         j_key=H[j][0] # H[j].key
-        # 8.이 키값(j_key)이 저장될 원래 slot(k)을 확인(k=hash_function(j_key))한 후 k과 origin_slot_index값과 같은지 확인한다.
+        # 8.이 키값(j_key)이 저장될 원래 slot(k)을 확인(k=hash_function(j_key))한 후 k와 i와 j의 조건을 확인한다.
         k = self.__hash_function(j_key)
         print('j_key: ',j_key,', k: ', k)
-        # 9-1.(같다) slot(i)에 slot(j)의 key/value를 옮기고 slot(j)를 비운 후(4-2.) 5.부터 반복한다.(4-2~)
         print(' k:',k,', H[j]:', H[j],', j:',j,', i:',i)
+        # 9-1.(k<i<=j)이거나 (i<=j<k)이거나 (k<i<j)이면, 10.을 수행한다.
         # if k < i and i <= j: # 강의 내용 기준 
         if k < i and i <= j or \
           i <= j and j < k or \
-          j < k and k <= i: # 강의 내용의 조건 추가 
+          j < k and k < i: # 강의 내용의 조건 추가 
+          # 10.slot(i)에 slot(j)의 key/value를 옮기고 slot(j)를 비운 후(4-2.) 5.부터 반복한다.(4-2.~)
           H[i] = H[j] # slot(i)에 slot(j)의 key/value를 옮기고
           print('move j to i- H[j]:',H[j],', i:',i,', j:',j)
           i = j # (while 반복문 상단에서) slot(j)를 비운다 (H[i] = None)
           print('delete H[j]:',H[i],', j(new i):',i)
-          break 
+          break # 4-2.실행 후 5.부터 반복한다
         # 9-2.(같지 않다) probe()함수로 저장위치가 이동된 대상이 아니므로, 작업대상을 다음 slot(다음j)으로 변경 후(5.probe(j)) 6.부터 반복한다. (5~ )
