@@ -57,7 +57,7 @@ print(B)
 #'''
 
 
-# ''' insert 
+''' insert 
 from my_heap import Heap
 
 A = [2,8,6,1,10,15,3,12,11]
@@ -82,6 +82,21 @@ print('B: ', B)
 # / \   / 
 # 1  8 10 
 
+#'''
+
+
+''' delete_max find_max insert
+from my_heap import Heap
+
+A = [2,8,6,1,10,15,3,12,11]
+#        2
+#      /   \
+#     8      6
+#    / \    /  \
+#   1  10  15   3
+#  /  \
+# 12  11
+
 C = Heap(A)
 # print(C.heap)
 print('C: ', C)
@@ -93,4 +108,44 @@ print(C.delete_max())
 print(C.delete_max())
 print(C.delete_max())
 print(C)
+#'''
+
+
+# ''' sort
+from my_heap import Heap
+
+A = [2,8,6,1,10,15,3,12,11]
+#        2
+#      /   \
+#     8      6
+#    / \    /  \
+#   1  10  15   3
+#  /  \
+# 12  11
+
+C = Heap(A)
+print('C: ', C)
+C.insert(14)
+print('C: ', C)
+print(C.sort())
+print(C)
+#'''
+
+
+''' test
+from my_heap import Heap
+
+A = [2,8,6,1,10,15,3,12,11]
+#        2
+#      /   \
+#     8      6
+#    / \    /  \
+#   1  10  15   3
+#  /  \
+# 12  11
+
+print('A: ',A)
+B = hp.make_heap(A)
+print('A: ',A)
+print('B: ', B)
 #'''
