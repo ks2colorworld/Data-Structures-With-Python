@@ -4,7 +4,6 @@ class Heap:
   def __repr__(self) -> str: # self == self.heap
     return repr(self.heap)
   def sort(self,A:list=None):
-    # C = A
     H = None
     if A is None:
       H = self.heap
@@ -59,7 +58,7 @@ class Heap:
   def make_heap(self,A:list)->list: # BigO(n*t) - BigO(n*h) - BigO(n*log n) - BigO(n)
     if A is None:
       return None
-    B = A
+    B = A.copy()
     n = len(B)
     # for (k = n-1; 0 <= k; k-- ) {/*pass*/} # js
     for k in range(n-1,-1,-1): # k = n-1,n-2, ..., 0

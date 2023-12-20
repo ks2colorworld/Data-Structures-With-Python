@@ -111,7 +111,7 @@ print(C)
 #'''
 
 
-# ''' sort
+''' sort
 from my_heap import Heap
 
 A = [2,8,6,1,10,15,3,12,11]
@@ -132,7 +132,7 @@ print(C)
 #'''
 
 
-''' test
+# ''' test
 from my_heap import Heap
 
 A = [2,8,6,1,10,15,3,12,11]
@@ -144,8 +144,30 @@ A = [2,8,6,1,10,15,3,12,11]
 #  /  \
 # 12  11
 
-print('A: ',A)
-B = hp.make_heap(A)
-print('A: ',A)
-print('B: ', B)
+# B = A.copy()
+# B.append(10)
+# print(A)
+# print(B)
+
+# hp = Heap()
+# print('A:',A)
+# B = hp.make_heap(A)
+# print('A:',A)
+# print('B:',B)
+# D = hp.sort(A)
+# print('D:',D)
+# print('A:',A)
+
+C = Heap(A)
+print('C:',C)
+# print('A:',A)
+print(C.insert(14))
+print('C:',C)
+print(C.sort())
+# E=[23,1,234,4,53,32,445,32,56,78]
+# print(C.sort(E))
+print('C:',C)
+# print('E:',E)
+
+
 #'''
