@@ -3,6 +3,20 @@ class Heap:
     self.heap = self.make_heap(A)
   def __repr__(self) -> str: # self == self.heap
     return repr(self.heap)
+  def sort(self,A:list=None):
+    # C = A
+    H = None
+    if A is None:
+      H = self.heap
+    else:
+      H = self.make_heap(A)
+    if H is None:
+      return None
+    n = len(H)
+    for i in range(n - 1, 0, -1):
+      H[i], H[0] = H[0], H[i]  # 최대값을 배열 끝으로 이동
+      self.heapify_down(0, H, i)  # 힙 구조를 복원
+    return H
   def insert(self,k:int,A:list=None): # BigO(log n)
     if A is None:
       A = self.heap
@@ -11,7 +25,7 @@ class Heap:
       self.heapify_up(len(A)-1,A)
   def heapify_up(self,k:int,A:list): # BigO(log2 n)
     parent=(k-1)//2
-    print('k:',k,', parent:',parent)
+    # print('k:',k,', parent:',parent)
     while 0 < k and A[parent] < A[k]:
       P = A[parent]
       A[parent] = A[k]
@@ -36,23 +50,25 @@ class Heap:
     if A is None:
       return None
     a = A[0]
-    A[0] = A[-1]
-    A[-1] = a
+    # A[0] = A[-1]
+    # A[-1] = a
+    A[-1], A[0] = a, A[-1]  # 최대값을 배열 끝으로 이동
     A.pop()
     self.heapify_down(0,A)
     return a # A[-1]
   def make_heap(self,A:list)->list: # BigO(n*t) - BigO(n*h) - BigO(n*log n) - BigO(n)
+    if A is None:
+      return None
     B = A
-    if B is None:
-      return B
     n = len(B)
     # for (k = n-1; 0 <= k; k-- ) {/*pass*/} # js
     for k in range(n-1,-1,-1): # k = n-1,n-2, ..., 0
       # B[k] -> heap 성질을 만족하는 곳으로 서로 자리바뀜 
       self.heapify_down(k,B)
     return B
-  def heapify_down(self,k:int,A:list): # BigO(h) - BigO(log n) 
-    n = len(A)
+  def heapify_down(self,k:int,A:list,n:int=-1): # BigO(h) - BigO(log n) 
+    if n == -1:
+      n = len(A)
     # A[k], n 
     while self.__is_not_leaf_node(k,n):
       K = A[k] 
@@ -64,9 +80,10 @@ class Heap:
         R = A[r]
       m = self.__index_max(K,L,R,k,l,r)
       if k != m:
-        M = A[m]
-        A[m] = K
-        A[k] = M
+        # M = A[m]
+        # A[m] = K # A[k]
+        # A[k] = M
+        A[m],A[k] = K, A[m]
         k=m
       # k+=1
       else:
