@@ -1,14 +1,50 @@
 class Heap:
-  def __init__(self) -> None:
-    pass
-  def insert(self):
-    pass
-  def find_max(self):
-    pass
-  def delete_max(self):
-    pass
+  def __init__(self,A:list=None) -> None:
+    self.heap = self.make_heap(A)
+  def __repr__(self) -> str: # self == self.heap
+    return repr(self.heap)
+  def insert(self,k:int,A:list=None): # BigO(log n)
+    if A is None:
+      A = self.heap
+    A.append(k)
+    if 0 < len(A):
+      self.heapify_up(len(A)-1,A)
+  def heapify_up(self,k:int,A:list): # BigO(log2 n)
+    parent=(k-1)//2
+    print('k:',k,', parent:',parent)
+    while 0 < k and A[parent] < A[k]:
+      P = A[parent]
+      A[parent] = A[k]
+      A[k] = P
+      k = parent
+      parent = (k-1)//2
+  def find_max(self,A:list=None): # BigO(1)
+    if A is None:
+      A = self.heap
+    else:
+      A = self.make_heap(A)
+    if A is None:
+      return None
+    return A[0]
+  def pop_max(self,A:list=None):
+    return self.delete_max(self,A)
+  def delete_max(self,A:list=None): # BigO(log n)
+    if A is None:
+      A = self.heap
+    else:
+      A = self.make_heap(A)
+    if A is None:
+      return None
+    a = A[0]
+    A[0] = A[-1]
+    A[-1] = a
+    A.pop()
+    self.heapify_down(0,A)
+    return a # A[-1]
   def make_heap(self,A:list)->list: # BigO(n*t) - BigO(n*h) - BigO(n*log n) - BigO(n)
     B = A
+    if B is None:
+      return B
     n = len(B)
     # for (k = n-1; 0 <= k; k-- ) {/*pass*/} # js
     for k in range(n-1,-1,-1): # k = n-1,n-2, ..., 0

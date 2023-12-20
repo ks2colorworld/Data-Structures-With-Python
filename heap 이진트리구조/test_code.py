@@ -21,7 +21,7 @@ A2 = [15,12,6,11,10,2,3,1,5]
 # 1   5
 #'''
 
-#''' make-heap
+''' make-heap
 from my_heap import Heap
 #    0 1 2 3 4  5  6 7  8  len:9
 A = [2,8,6,1,10,15,3,12,11]
@@ -54,4 +54,43 @@ print(B)
 # /  \ 
 # 1   8
 
+#'''
+
+
+# ''' insert 
+from my_heap import Heap
+
+A = [2,8,6,1,10,15,3,12,11]
+B = [15, 12, 6, 11, 10, 2, 3, 1, 8]
+#        15
+#      /    \
+#    12      6
+#   /  \    /  \
+#  11  10  2    3
+# /  \ 
+# 1   8
+
+hp = Heap()
+hp.insert(14,B)
+print('B: ', B)
+# B = [15, 14, 6, 11, 12, 2, 3, 1, 8, 10]
+#         15
+#       /    \
+#     14      6
+#   /   \    /  \
+#  11   12  2    3
+# / \   / 
+# 1  8 10 
+
+C = Heap(A)
+# print(C.heap)
+print('C: ', C)
+C.insert(14)
+print('C: ', C)
+print(C.find_max())
+print(C.delete_max())
+print(C.delete_max())
+print(C.delete_max())
+print(C.delete_max())
+print(C)
 #'''
