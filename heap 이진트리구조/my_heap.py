@@ -12,7 +12,8 @@ class Heap:
     if H is None:
       return None
     n = len(H)
-    for i in range(n - 1, 0, -1):
+    for i in range(n - 1, 0, -1): # i = n-1,n-2, ..., 1
+      # print('i:',i)
       H[i], H[0] = H[0], H[i]  # 최대값을 배열 끝으로 이동
       self.heapify_down(0, H, i)  # 힙 구조를 복원
     return H
@@ -63,6 +64,7 @@ class Heap:
     # for (k = n-1; 0 <= k; k-- ) {/*pass*/} # js
     for k in range(n-1,-1,-1): # k = n-1,n-2, ..., 0
       # B[k] -> heap 성질을 만족하는 곳으로 서로 자리바뀜 
+      # print('k:',k)
       self.heapify_down(k,B)
     return B
   def heapify_down(self,k:int,A:list,n:int=-1): # BigO(h) - BigO(log n) 
