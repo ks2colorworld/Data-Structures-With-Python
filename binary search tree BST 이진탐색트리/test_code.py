@@ -1,4 +1,4 @@
-# '''
+'''
 from my_BT import Node
 
 a6=Node(6)
@@ -19,5 +19,35 @@ d5.parent = b9
 #  9   1
 #   \
 #    5
+
+#'''
+
+'''
+from my_BT import Node
+
+root = Node(6,left=Node(9,right=Node(5)),right=Node(1))
+#    6
+#   / \
+#  9   1
+#   \
+#    5
+
+#'''
+
+#'''
+from my_BT import Node
+
+root = Node('F',\
+  left=Node('B',left=Node('A'),\
+                right=Node('D', left=Node('C'),\
+                                right=Node('E'))),\
+  right=Node('G',right=Node('I',left=Node('H'))))
+  #       F
+  #     /   \
+  #    B      G
+  #   / \      \
+  #  A   D      I
+  #     / \    /
+  #    C   E  H 
 
 #'''
