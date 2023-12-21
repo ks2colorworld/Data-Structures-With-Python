@@ -132,8 +132,9 @@ print(C)
 #'''
 
 
-# ''' test
-from my_heap import Heap
+''' test
+# from my_heap import Heap
+from my_heap2 import Heap
 
 A = [2,8,6,1,10,15,3,12,11]
 #        2
@@ -170,4 +171,64 @@ print('C:',C)
 # print('E:',E)
 
 
+#'''
+
+# '''
+import heapq
+
+
+A = [2,8,6,1,10,15,3,12,11]
+#        2
+#      /   \
+#     8      6
+#    / \    /  \
+#   1  10  15   3
+#  /  \
+# 12  11
+
+
+print('A:',A)
+# heapq.heapify(A) # heap_min not max
+# print('A:',A)
+# # print(heapq.heappop(A))
+# print(heapq.heapreplace(A,14)) # 힙 사이즈 유지 root node 제거 후 heappush
+# # print(heapq.heappush(A,14))
+# print(heapq.heappushpop(A,14)) # heappop() 후에 heappush(14)
+# print('A:',A)
+# heapq.heapify(A)
+# print('A:',A)
+# heapq._heapify_max(A)
+# print('A:',A)
+# print(heapq.heappop(A))
+# heapq._heapify_max(A)
+A.sort()
+A.reverse()
+print(A.pop())
+B = [100,200,300,-10,-20,-30]
+A.extend(B)
+# heapq.heapify(A)
+# heapq._heapify_max(A)
+A.sort()
+print(A.pop())
+# A.reverse()
+print('A:',A)
+
+my_list = ["apple", "banana", "orange", "kiwi", '한글', '바나나','바나나바나나바']
+my_list.sort(key=len, reverse=True)
+
+print(my_list)
+#'''
+
+
+'''
+def example_function(arg1, *, key_arg1=None, key_arg2=None):
+    print("arg1:", arg1)
+    print("key_arg1:", key_arg1)
+    print("key_arg2:", key_arg2)
+
+# 함수 호출
+example_function("positional_argument", key_arg1="value1", key_arg2="value2")
+
+# 오류 발생: example_function() missing 1 required positional argument: 'arg1'
+# example_function("positional_argument111", "value1", "value2")
 #'''
