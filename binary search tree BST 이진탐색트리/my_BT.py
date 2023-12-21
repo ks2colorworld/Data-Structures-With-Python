@@ -10,3 +10,20 @@ class Node:
       self.right.parent = self
   def __str__(self) -> str:
     return str(self.key)
+  def preorder(self):
+    str = ''
+    if self is not None:
+      # preorder()
+      str = str + self.key + ','
+      # print(self.key)
+      if self.left is not None:
+        str = str + self.left.preorder()
+      # inorder()
+      # str = str + self.key + ','
+      # print(self.key)
+      if self.right is not None:
+        str = str + self.right.preorder()
+      # postorder()
+      # str = str + self.key + ','
+      # print(self.key)
+    return str 

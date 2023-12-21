@@ -50,4 +50,5 @@ root = Node('F',\
   #     / \    /
   #    C   E  H 
 
+print(root.preorder()[:-1]) # 문자열[:-n] 뒤에서부터 n개의 문자열 지우는 문법
 #'''
