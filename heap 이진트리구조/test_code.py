@@ -133,7 +133,8 @@ print(C)
 
 
 # ''' test
-from my_heap import Heap
+# from my_heap import Heap
+from my_heap2 import Heap
 
 A = [2,8,6,1,10,15,3,12,11]
 #        2
