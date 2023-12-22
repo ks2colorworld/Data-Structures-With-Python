@@ -75,9 +75,12 @@ root = Node(15,\
   #          19
 
 bst = BST(root)
-for x in bst:
-  print(x)
+# for x in bst:
+#   print(x)
 
-print('len:',len(bst))
-print(bst) # preorder
+# print('len:',len(bst))
+# print(bst) # preorder
+
+print('find loc:',bst.find_loc(1)) # node(2)
+print('search:',bst.search(1)) # None
 #'''
