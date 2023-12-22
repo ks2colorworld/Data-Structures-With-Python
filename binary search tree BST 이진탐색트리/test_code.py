@@ -34,7 +34,7 @@ root = Node(6,left=Node(9,right=Node(5)),right=Node(1))
 
 #'''
 
-#'''
+'''
 from my_BT import Node
 
 root = Node('F',\
@@ -52,5 +52,23 @@ root = Node('F',\
 
 # print(root.preorder()[:-1]) # 문자열[:-n] 뒤에서부터 n개의 문자열 지우는 문법
 print(root.preorder()) # list
-print(root.inorder()) # list
+# print(root.inorder()) # list
+for x in root:
+  print(x) # preorder()
+#'''
+
+#'''
+from my_BST import BST
+
+  #      15
+  #     /   \
+  #    4     20
+  #   /     /  \
+  #  2    17    32
+  #         \
+  #          19
+
+bst = BST()
+for x in bst:
+  print(x)
 #'''
