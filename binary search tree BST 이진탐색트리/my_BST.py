@@ -64,3 +64,47 @@ class BST:
       return v
     else: print(f"key '{key}' has already been inserted")
     return None
+  def deleteByMerging(self,key_or_node:Node|int)->Node|int|None:
+    if isinstance(key_or_node, Node):
+      return self.deleteNodeByMerging(key_or_node)
+    elif isinstance(key_or_node, int):
+      return self.deleteKeyByMerging(key_or_node)
+    else:
+      return None
+  def deleteNodeByMerging(self,x:Node)->Node|None:
+    # 1. a(x.left) is None
+    # 2. x is root node (x.parent is None)
+    a=x.left
+    b=x.right
+    pt=x.parent
+    c=None # x자리를 대체할 노드
+    m=None # L(a가 root인 트리)에서 가장 큰 노드
+    if a is not None:
+      c=a
+      m=a
+      while m.right is not None:
+        m=m.right
+      m.right=b
+      if b is not None:
+        b.parent=m
+    else: # 1. a is None
+      c=b 
+    # next step
+    if pt is not None:
+      if c is not None: c.parent = pt
+      if pt.key < c.key:
+        pt.right = c
+      else:
+        pt.left = c
+    else: # 2. x is root node
+      self.root = c
+      if c is not None: c.parent = None
+    self.size -= 1
+    return x
+  def deleteKeyByMerging(self,key:int)->int|None:
+    v=self.find_loc(key)
+    if v is not None and v.key is key:
+      x = self.deleteNodeByMerging(v)
+      return x.key
+    else:
+      return None

@@ -57,7 +57,7 @@ for x in root:
   print(x) # preorder()
 #'''
 
-#'''
+# '''
 from my_BT import Node
 from my_BST import BST
 
@@ -86,4 +86,47 @@ print('search:',bst.search(1)) # None
 print('insert:',bst.insert(1))
 print('insert:',bst.insert(1))
 print(bst)
+
+b2 = BST()
+b2.insert(20)
+b2.insert(15)
+b2.insert(2)
+b2.insert(40)
+b2.insert(5)
+b2.insert(61)
+b2.insert(32)
+b2.insert(12)
+print(b2)
+
+# d=b2.deleteKeyByMerging(20)
+d=b2.deleteByMerging(20)
+print(d)
+print(b2)
 #'''
+
+'''
+# from typing import override
+
+class A:
+  def __init__(self) -> None:
+    pass
+  # @override
+  def funcStr(self,s:str):
+    print('str:',s)
+  # @override
+  def funcInt(self,i:int):
+    print('int:',i)
+  
+  def func(self, arg):
+    if isinstance(arg, str):
+      self.funcStr(arg)
+    elif isinstance(arg, int):
+      self.funcInt(arg)
+    else:
+      # 다른 타입에 대한 처리
+      pass
+
+a = A()
+a.func('a')
+a.func(1)
+# '''
