@@ -83,4 +83,7 @@ bst = BST(root)
 
 print('find loc:',bst.find_loc(1)) # node(2)
 print('search:',bst.search(1)) # None
+print('insert:',bst.insert(1))
+print('insert:',bst.insert(1))
+print(bst)
 #'''
