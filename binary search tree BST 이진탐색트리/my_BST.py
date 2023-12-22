@@ -7,7 +7,7 @@ class BST:
   def __len__(self):
     return self.size
   def __str__(self) -> str:
-    return str(self.root.preorder())
+    return str(self.root.inorder()) # preorder()
   def __iter__(self):
     if self.root is None:
       return iter([])  # Return an empty iterator if there is no root node.
