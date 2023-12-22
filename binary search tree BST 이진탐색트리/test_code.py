@@ -58,8 +58,14 @@ for x in root:
 #'''
 
 #'''
+from my_BT import Node
 from my_BST import BST
 
+root = Node(15,\
+      left=Node(4,  left=Node(2)),\
+      right=Node(20,left=Node(17,\
+                                right=Node(19)),\
+                    right=Node(32)))
   #      15
   #     /   \
   #    4     20
@@ -68,7 +74,10 @@ from my_BST import BST
   #         \
   #          19
 
-bst = BST()
+bst = BST(root)
 for x in bst:
   print(x)
+
+print('len:',len(bst))
+print(bst) # preorder
 #'''
