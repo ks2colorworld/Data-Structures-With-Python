@@ -28,6 +28,8 @@ class Node:
       return self.__preorderList[x]
     else:
       raise StopIteration
+  def __len__(self):
+    return len(self.preorder())
   def preorder(self)->list:
     A = []
     if self is not None:
