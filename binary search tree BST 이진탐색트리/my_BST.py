@@ -3,7 +3,7 @@ from my_BT import Node
 
 class BST:
   def __init__(self,root:Node=None) -> None:
-    self.root:Node = root
+    self.root = root
     self.size = 0 if root is None else len(root)
   def __len__(self):
     return self.size
@@ -56,7 +56,7 @@ class BST:
       if p is None:
         self.root = v
       else: # p is not None and p.key is not key
-        v.parent = p
+        # v.parent = p
         if key <= p.key:
           p.left = v
         else:
@@ -88,20 +88,19 @@ class BST:
       while m.right is not None:
         m=m.right
       m.right=b
-      if b is not None:
-        b.parent=m
+      # if b is not None: b.parent=m
     else: # 1. a is None
       c=b 
     # next step
     if pt is not None:
-      if c is not None: c.parent = pt
+      # if c is not None: c.parent = pt
       if pt.key < c.key:
         pt.right = c
       else:
         pt.left = c
     else: # 2. x is root node
       self.root = c
-      if c is not None: c.parent = None
+      # if c is not None: c.parent = None
     self.size -= 1
     return x
   def deleteKeyByMerging(self,key:int)->int|None:
@@ -145,14 +144,11 @@ class BST:
       c=copy.copy(m)
       print('c:',self.printNode(c))
       m.parent.right=m.left
-      if m.left is not None:
-        m.left.parent = m.parent
+      # if m.left is not None: m.left.parent = m.parent
       print('m.parent:',self.printNode(m.parent))
       c.parent,c.left,c.right=x.parent,x.left,x.right # x.left==a, x.right==b
-      if c.left is not None:
-        c.left.parent=c
-      if c.right is not None:
-        c.right.parent=c
+      # if c.left is not None: c.left.parent=c
+      # if c.right is not None: c.right.parent=c
       print('c:',self.printNode(c))
       print('c.left:',self.printNode(c.left))
       print('c.right:',self.printNode(c.right))
@@ -160,8 +156,7 @@ class BST:
       print('# 2 a is not None and m is a')
       c=a
       c.parent,c.right=x.parent,x.right
-      if c.right is not None:
-        c.right.parent=c # b.parent = a
+      # if c.right is not None: c.right.parent=c # b.parent = a
     elif b is not None: # 3 m is None and a is None and b is not None
       print('# 3 m is None and a is None and b is not None')
       c=b
@@ -212,3 +207,17 @@ class BST:
     if x is None:
       return 'None'
     return 'node(k:'+str(x.key)+',p:'+str(x.parent)+',l:'+str(x.left)+',r:'+str(x.right)+')'
+  
+  
+  @property
+  def root(self):
+    if self.__root is None:
+      return Node()
+    return self.__root
+
+  @root.setter
+  def root(self, node:'Node'):
+    self.__root = node
+    if node is None:
+      return
+    node.parent = None

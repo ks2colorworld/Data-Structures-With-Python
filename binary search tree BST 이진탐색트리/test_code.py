@@ -8,11 +8,17 @@ d5=Node(5)
 
 a6.left = b9
 a6.right = c1
-b9.parent = a6
-c1.parent = a6
+# b9.parent = a6
+# c1.parent = a6
 # b9.left = None
 b9.right = d5
-d5.parent = b9
+# d5.parent = b9
+
+print(a6.preorder())
+print(a6.inorder())
+
+print(b9.inorder())
+print(c1.inorder())
 
 #    6
 #   / \
@@ -31,7 +37,8 @@ root = Node(6,left=Node(9,right=Node(5)),right=Node(1))
 #  9   1
 #   \
 #    5
-
+print(root.inorder())
+print(root.preorder())
 #'''
 
 '''
@@ -52,9 +59,9 @@ root = Node('F',\
 
 # print(root.preorder()[:-1]) # 문자열[:-n] 뒤에서부터 n개의 문자열 지우는 문법
 print(root.preorder()) # list
-# print(root.inorder()) # list
+print(root.inorder()) # list
 for x in root:
-  print(x) # preorder()
+  print(x) # inorder()
 #'''
 
 '''
@@ -74,22 +81,22 @@ root = Node(15,\
   #         \
   #          19
 
-bst = BST(root)
-# for x in bst:
-#   print(x)
+bst = BST(root) # inorder()
+for x in bst:
+  print(x)
 
-# print('len:',len(bst))
-# print(bst) # preorder
+print('len:',len(bst))
+# print(bst) # inorder
 
 print('find loc:',bst.find_loc(1)) # node(2)
 print('search:',bst.search(1)) # None
 print('insert:',bst.insert(1))
-print('insert:',bst.insert(1))
+# print('insert:',bst.insert(1))
 print(bst)
 
 #'''
 
-'''
+# '''
 from my_BT import Node
 from my_BST import BST
 
@@ -128,12 +135,12 @@ print(bst)
 # print(bst.minNode())
 
 d=bst.deleteNodeByCopying(bst.search(2))
-# d=bst.deleteNodeByMerging(bst.search(15))
+d=bst.deleteNodeByMerging(bst.search(15))
 print(d)
 print(bst)
 # '''
 
-# '''
+'''
 from my_BT import Node
 from my_BST import BST
 
@@ -164,8 +171,8 @@ print(bst)
 #       18 
 
 
-# d=bst.deleteNodeByMerging(bst.search(20))
-# d=bst.deleteNodeByCopying(bst.search(20))
+d=bst.deleteNodeByMerging(bst.search(20))
+d=bst.deleteNodeByCopying(bst.search(20))
 d=bst.deleteByCopying(4)
 # d=bst.deleteNodeByCopyingWithPrint(bst.search(4))
 print(d)

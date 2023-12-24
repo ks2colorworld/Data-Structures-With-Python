@@ -3,11 +3,7 @@ class Node:
     self.key = key
     self.parent = parent
     self.left = left
-    if left is not None:
-      self.left.parent = self
     self.right = right
-    if right is not None:
-      self.right.parent = self
     # self.__preorderList=[]
     self.__inorderList=[]
     self.__current=-1
@@ -66,3 +62,40 @@ class Node:
       # postorder()
       # print(self.key)
     return A 
+  
+  
+  @property
+  def parent(self):
+    return self.__parent
+
+  @parent.setter
+  def parent(self, node:'Node'):
+    self.__parent = node
+    # if node is None:
+    #   return
+    # if self.__parent.key < self.key:
+    #   self.__parent.right = self
+    # else: self.__parent.left = self
+  
+  @property
+  def left(self):
+    return self.__left
+
+  @left.setter
+  def left(self, node:'Node'):
+    self.__left = node
+    if node is None:
+      return
+    self.__left.parent = self
+  
+  @property
+  def right(self):
+    return self.__right
+
+  @right.setter
+  def right(self, node:'Node'):
+    self.__right = node
+    if node is None:
+      return
+    self.__right.parent = self
+  
