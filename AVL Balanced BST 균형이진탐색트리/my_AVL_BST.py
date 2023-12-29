@@ -31,15 +31,21 @@ class AVL(BST):
     # / A \ / B \           >                / B \
     
   def rotateLeft(self,Z:Node):
-    pass
+    if Z is None: return None
+    if Z.right is None: return None
+    X = Z.right  # not None
+    a = X.left # can be None
     # 상위 노드([W])를 [Z]에서 [X]로 변경한다.
-    # [W].left에 [Z]
-    # if [Z].parent is not None:
-      # if [Z].parent.right is [Z]: [Z].parent.right = [W]
-      # else: [Z].parent.left = [W]
-    # else: [W].parent = None 
+    W = X
+    pt = Z.parent
+    if pt is not None: 
+      if pt.right is Z: pt.right = W # also set W.parent = pt
+      else: pt.left = W # also set W.parent = pt
+    else: W.parent = None # not set root = W (Set in the code that called rotateLeft())
+    W.left = Z # also set Z.parent = W
     # [Z].right에 a (X.left)
-    # return [W]
+    Z.right = a # also set a.parent = Z
+    return W
     
     #     [Z]               >          [X]     
     #    /     \            >        /     \         
