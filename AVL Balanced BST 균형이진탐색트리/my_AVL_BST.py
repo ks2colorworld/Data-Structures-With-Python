@@ -6,15 +6,21 @@ from my_BT import Node
 
 class AVL(BST):
   def rotateRight(self,Z:Node):
-    pass
+    if Z is None: return None
+    if Z.left is None: return None
+    X = Z.left  # not None
+    b = X.right # can be None
     # 상위 노드([W])를 [Z]에서 [X]로 변경한다.
-    # [W].right에 [Z]
-    # if [Z].parent is not None:
-      # if [Z].parent.right is [Z]: [Z].parent.right = [W]
-      # else: [Z].parent.left = [W]
-    # else: [W].parent = None 
+    W = X
+    pt = Z.parent
+    if pt is not None: 
+      if pt.right is Z: pt.right = W # also set W.parent = pt
+      else: pt.left = W # also set W.parent = pt
+    else: W.parent = None # not set root = W (Set in the code that called rotateRight())
+    W.right = Z # also set Z.parent = W
     # [Z].left에 b (X.right)
-    # return [W]
+    Z.left = b # also set b.parent = Z
+    return W
     
     #          [Z]          >              [X]     
     #       /      \        >            /      \   
