@@ -78,3 +78,29 @@ class AVL(BST):
     
     # Z is root Node? self.root = W 
       # 루트 노드 변경 
+  
+  def rebalance(self,X:Node,Y:Node,Z:Node):
+    pass
+  
+  def nodeHeight(self,node:Node):
+    if node is None: return 0
+    return node.height
+  
+  def updateNodeHeight(self,node:Node):
+    h = node.height
+    if node is not None:
+      node.height = 1 + max(self.nodeHeight(node.left),self.nodeHeight(node.right))
+    if node.height == h: return
+    
+    pt:Node = node.parent
+    if pt is None: return
+    while pt is not None:
+      pt.height = 1 + max(self.nodeHeight(pt.left),self.nodeHeight(pt.right))
+      pt = pt.parent
+  
+  def printNode(self, x: Node, withHeight:bool=False):
+    if x is None:
+      return 'None'
+    # return x.printNode() if withHeight else super().printNode(x)
+    return x.printNode(withHeight)
+  
