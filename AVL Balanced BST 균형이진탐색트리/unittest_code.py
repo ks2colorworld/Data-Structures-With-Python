@@ -203,7 +203,57 @@ class TestAVLUtilFuncMethod(unittest.TestCase):
         self.assertEqual(N.nodeHeight(nn),0)
         
     def test_updateNodeHeight(self):
-        pass
+        a6,b9,c1,d5=self.a6,self.b9,self.c1,self.d5
+        N=self.N
+        a6.left = b9
+        N.updateNodeHeight(b9.parent) # << a6
+        # print('a6:',a6.printNode(True)) # node(k:6,p:None,l:9,r:None,height:2)
+        self.assertEqual(a6.printNode(True),'node(k:6,p:None,l:9,r:None,height:2)')
+        # print('a6.height:',a6.height) # 2
+        self.assertEqual(a6.height,2)
+        # print('b9.height:',b9.height) # 1
+        self.assertEqual(b9.height,1)
+        # print('a6.height:',N.nodeHeight(a6)) # 2
+        self.assertEqual(N.nodeHeight(a6),2)
+        # print('b9.height:',N.nodeHeight(b9)) # 1
+        self.assertEqual(N.nodeHeight(b9),1)
+        
+        a6.right = c1
+        N.updateNodeHeight(c1.parent) # << a6
+        # print('a6:',a6.printNode(True)) # node(k:6,p:None,l:9,r:1,height:2)
+        self.assertEqual(a6.printNode(True),'node(k:6,p:None,l:9,r:1,height:2)')
+        # print('a6.height:',a6.height) # 2
+        self.assertEqual(a6.height,2)
+        # print('c1.height:',c1.height) # 1
+        self.assertEqual(c1.height,1)
+        # print('a6.height:',N.nodeHeight(a6)) # 2
+        self.assertEqual(N.nodeHeight(a6),2)
+        # print('c1.height:',N.nodeHeight(c1)) # 1
+        self.assertEqual(N.nodeHeight(c1),1)
+        
+        b9.right = d5
+        N.updateNodeHeight(d5.parent) # << b9
+        # print('a6:',a6.printNode(True)) # node(k:6,p:None,l:9,r:1,height:3)
+        self.assertEqual(a6.printNode(True),'node(k:6,p:None,l:9,r:1,height:3)')
+        # print('b9:',b9.printNode(True)) # node(k:9,p:6,l:None,r:5,height:2)
+        self.assertEqual(b9.printNode(True),'node(k:9,p:6,l:None,r:5,height:2)')
+        # print('c1:',c1.printNode(True)) # node(k:1,p:6,l:None,r:None,height:1)
+        self.assertEqual(c1.printNode(True),'node(k:1,p:6,l:None,r:None,height:1)')
+        # print('d5:',d5.printNode(True)) # node(k:5,p:9,l:None,r:None,height:1)
+        self.assertEqual(d5.printNode(True),'node(k:5,p:9,l:None,r:None,height:1)')
+        # print('a6.height:',a6.height) # 3
+        self.assertEqual(a6.height,3)
+        # print('b9.height:',b9.height) # 2
+        self.assertEqual(b9.height,2)
+        # print('c1.height:',c1.height) # 1
+        self.assertEqual(c1.height,1)
+        # print('a6.height:',N.nodeHeight(a6)) # 3
+        self.assertEqual(N.nodeHeight(a6),3)
+        # print('b9.height:',N.nodeHeight(b9)) # 2
+        self.assertEqual(N.nodeHeight(b9),2)
+        # print('c1.height:',N.nodeHeight(c1)) # 1
+        self.assertEqual(N.nodeHeight(c1),1)
+
 
 ''' rebalance 1
 A = AVL()
