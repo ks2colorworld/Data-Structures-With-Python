@@ -172,27 +172,59 @@ class TestAVLRotateLeftMethod(unittest.TestCase):
 # '''
 
 class TestAVLUtilFuncMethod(unittest.TestCase):
-    pass
+    def setUp(self) -> None:
+        #1
+        n = Node(3)
+        N = AVL()
+        #2
+        a6=Node(6)
+        b9=Node(9)
+        c1=Node(1)
+        d5=Node(5)
+        #set
+        self.n,self.N = n,N
+        self.a6 = a6
+        self.b9 = b9
+        self.c1 = c1
+        self.d5 = d5
+        
+    def test_printNode_nodeHeight(self):
+        n,N = self.n,self.N
+        # print('n:',n.printNode(True)) # node(k:3,p:None,l:None,r:None,height:1)
+        self.assertEqual(n.printNode(True), 'node(k:3,p:None,l:None,r:None,height:1)')
+        # print('n:', N.printNode(n,True)) # node(k:3,p:None,l:None,r:None,height:1)
+        self.assertEqual(N.printNode(n,True), 'node(k:3,p:None,l:None,r:None,height:1)')
+        # print('n.heiht',N.nodeHeight(n)) # 1
+        self.assertEqual(N.nodeHeight(n), 1)
+        nn = None
+        # print(N.printNode(nn,True)) # None
+        self.assertEqual(N.printNode(nn,True),'None') # str
+        # print(N.nodeHeight(nn)) # 0
+        self.assertEqual(N.nodeHeight(nn),0)
+        
+    def test_updateNodeHeight(self):
+        pass
 
 ''' rebalance 1
 A = AVL()
 A.insert(10)
 A.insert(5)
 
-print('root.left.height:',A.nodeHeight(A.root.left), 'root.right.height:',A.nodeHeight(A.root.right))
-print('A:', A) 
-print('A.root:',A.root.printNode(True))
+print('root.left.height:',A.nodeHeight(A.root.left), 'root.right.height:',A.nodeHeight(A.root.right)) # 1 0
+print('A:', A) # [5, 10]
+print('A.root:',A.root.printNode(True)) # node(k:10,p:None,l:5,r:None,height:2)
 for x in A:
     if A.search(x) is A.root:
         continue
     print(A.search(x).printNode(True))
+    
 
 print('----')
 A.insert(4)
 
-print('root.left.height:',A.nodeHeight(A.root.left), 'root.right.height:',A.nodeHeight(A.root.right))
-print('A:', A) 
-print('A.root:',A.root.printNode(True))
+print('root.left.height:',A.nodeHeight(A.root.left), 'root.right.height:',A.nodeHeight(A.root.right)) # 1 1
+print('A:', A) # [4, 5, 10]
+print('A.root:',A.root.printNode(True)) # node(k:5,p:None,l:4,r:10,height:2)
 for x in A:
     if A.search(x) is A.root:
         continue
@@ -205,9 +237,9 @@ A.insert(14)
 A.insert(20)
 A.insert(21)
 
-print('root.left.height:',A.nodeHeight(A.root.left), 'root.right.height:',A.nodeHeight(A.root.right))
-print('A:', A) 
-print('A.root:',A.root.printNode(True))
+print('root.left.height:',A.nodeHeight(A.root.left), 'root.right.height:',A.nodeHeight(A.root.right)) # 2 3
+print('A:', A) # [4, 5, 7, 10, 11, 14, 20, 21]
+print('A.root:',A.root.printNode(True)) # node(k:10,p:None,l:5,r:14,height:4)
 for x in A:
     if A.search(x) is A.root:
         continue
@@ -237,9 +269,86 @@ for x in A:
 # '''
 
 class TestAVLRebalanceMethod(unittest.TestCase):
-    pass
+    def test_rebalance1(self):
+        A = AVL()
+        A.insert(10)
+        A.insert(5)
 
-# ''' insert
+        # print('root.left.height:',A.nodeHeight(A.root.left), 'root.right.height:',A.nodeHeight(A.root.right)) # 1 0
+        self.assertEqual(A.nodeHeight(A.root.left),1)
+        self.assertEqual(A.nodeHeight(A.root.right),0)
+        # print('A:', A) # [5, 10]
+        self.assertEqual(str(A),'[5, 10]')
+        # print('A.root:',A.root.printNode(True)) # node(k:10,p:None,l:5,r:None,height:2)
+        self.assertEqual(A.root.printNode(True),'node(k:10,p:None,l:5,r:None,height:2)')
+        for x in A:
+            if A.search(x) is A.root:
+                continue
+            # print(A.search(x).printNode(True))
+            s = A.search(x).printNode(True)
+            match x:
+                case 5:
+                    self.assertEqual(s,'node(k:5,p:10,l:None,r:None,height:1)')
+            
+
+        # print('----')
+        A.insert(4)
+
+        # print('root.left.height:',A.nodeHeight(A.root.left), 'root.right.height:',A.nodeHeight(A.root.right)) # 1 1
+        self.assertEqual(A.nodeHeight(A.root.left),1)
+        self.assertEqual(A.nodeHeight(A.root.right),1)
+        # print('A:', A) # [4, 5, 10]
+        self.assertEqual(str(A),'[4, 5, 10]')
+        # print('A.root:',A.root.printNode(True)) # node(k:5,p:None,l:4,r:10,height:2)
+        self.assertEqual(A.root.printNode(True),'node(k:5,p:None,l:4,r:10,height:2)')
+        for x in A:
+            if A.search(x) is A.root:
+                continue
+            # print(A.search(x).printNode(True))
+            s = A.search(x).printNode(True)
+            match x:
+                case 4:
+                    self.assertEqual(s,'node(k:4,p:5,l:None,r:None,height:1)')
+                case 10:
+                    self.assertEqual(s,'node(k:10,p:5,l:None,r:None,height:1)')
+
+        # print('----')
+        A.insert(7)
+        A.insert(11)
+        A.insert(14)
+        A.insert(20)
+        A.insert(21)
+
+        # print('root.left.height:',A.nodeHeight(A.root.left), 'root.right.height:',A.nodeHeight(A.root.right)) # 2 3
+        self.assertEqual(A.nodeHeight(A.root.left),2)
+        self.assertEqual(A.nodeHeight(A.root.right),3)
+        # print('A:', A) # [4, 5, 7, 10, 11, 14, 20, 21]
+        self.assertEqual(str(A),'[4, 5, 7, 10, 11, 14, 20, 21]')
+        # print('A.root:',A.root.printNode(True)) # node(k:10,p:None,l:5,r:14,height:4)
+        self.assertEqual(A.root.printNode(True),'node(k:10,p:None,l:5,r:14,height:4)')
+        for x in A:
+            if A.search(x) is A.root:
+                continue
+            # print(A.search(x).printNode(True))
+            s = A.search(x).printNode(True)
+            match x:
+                case 4:
+                    self.assertEqual(s,'node(k:4,p:5,l:None,r:None,height:1)')
+                case 5:
+                    self.assertEqual(s,'node(k:5,p:10,l:4,r:7,height:2)')
+                case 7:
+                    self.assertEqual(s,'node(k:7,p:5,l:None,r:None,height:1)')
+                case 11:
+                    self.assertEqual(s,'node(k:11,p:14,l:None,r:None,height:1)')
+                case 14:
+                    self.assertEqual(s,'node(k:14,p:10,l:11,r:20,height:3)')
+                case 20:
+                    self.assertEqual(s,'node(k:20,p:14,l:None,r:21,height:2)')
+                case 21:
+                    self.assertEqual(s,'node(k:21,p:20,l:None,r:None,height:1)')
+
+        
+''' insert
 A = AVL()
 A.insert(10)
 A.insert(5)
@@ -271,7 +380,51 @@ print('[28]:', A.search(28).printNode(True)) # 28 # node(k:28,p:27,l:None,r:None
 # '''
 
 class TestAVLInsertMethod(unittest.TestCase):
-    pass
+    def setUp(self) -> None:
+        A = AVL()
+        A.insert(10)
+        A.insert(5)
+        A.insert(15)
+        A.insert(2)
+        A.insert(7)
+        A.insert(11)
+        A.insert(30)
+        A.insert(4)
+        A.insert(25)
+        A.insert(40)
+        self.A = A
+    
+    def test_insert(self):
+        A = self.A
+        
+        # print('A:', A) # [2, 4, 5, 7, 10, 11, 15, 25, 30, 40]
+        self.assertEqual(str(A),'[2, 4, 5, 7, 10, 11, 15, 25, 30, 40]')
 
+        # print('----')
+        A.insert(27)
+
+        # print('A:', A) # [2, 4, 5, 7, 10, 11, 15, 25, 27, 30, 40]
+        self.assertEqual(str(A),'[2, 4, 5, 7, 10, 11, 15, 25, 27, 30, 40]')
+        # print('[30]:', A.search(27).parent.printNode(True)) # 30 # node(k:30,p:25,l:27,r:40,height:2)
+        self.assertEqual(A.search(27).parent.printNode(True),'node(k:30,p:25,l:27,r:40,height:2)')
+        # print('[27]:', A.search(27).printNode(True)) # 27 # node(k:27,p:30,l:None,r:None,height:1)
+        self.assertEqual(A.search(27).printNode(True),'node(k:27,p:30,l:None,r:None,height:1)')
+
+        # print('----')
+        A.insert(28)
+
+        # print('A:', A) # [2, 4, 5, 7, 10, 11, 15, 25, 27, 28, 30, 40]
+        self.assertEqual(str(A),'[2, 4, 5, 7, 10, 11, 15, 25, 27, 28, 30, 40]')
+        # print('[27]:', A.search(28).parent.printNode(True)) # 27 # node(k:27,p:30,l:None,r:28,height:2)
+        self.assertEqual(A.search(28).parent.printNode(True),'node(k:27,p:30,l:None,r:28,height:2)')
+        # print('[28]:', A.search(28).printNode(True)) # 28 # node(k:28,p:27,l:None,r:None,height:1)
+        self.assertEqual(A.search(28).printNode(True),'node(k:28,p:27,l:None,r:None,height:1)')
+
+# ''' delete
+
+# '''
+
+    class TestAVLDeleteMethod(unittest.TestCase):
+        pass
 if __name__ == '__main__':
     unittest.main()
