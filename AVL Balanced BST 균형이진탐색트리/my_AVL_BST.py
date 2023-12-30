@@ -61,7 +61,6 @@ class AVL(BST):
     v = super().insert(key)
     if v is None:
       return None
-    print('insert:',v.printNode(True))
     
     # set each Node's height to leafNode 
       # 삽입되는 노드의 부모노드들을 추적하여 각 노드들의 height를 +1씩 증가시킨다.
@@ -80,12 +79,10 @@ class AVL(BST):
     Z = Y.parent # can be None
     if Z is None: return v # 0->1
     
-    print('---1---')
     needForRebalance = False
     while Z is not None: # to root-node
       heightDiff = self.nodeHeight(Z.left) - self.nodeHeight(Z.right)
       if 1 < abs(heightDiff): # 그 차이가 2, -2 이상 나면
-        print('heightDiff:',heightDiff)
         needForRebalance = True
         break
       X = Y # up one node
@@ -94,17 +91,13 @@ class AVL(BST):
       Z = Y.parent
       if Z is None: return v
 
-    print('---2-1---')
     if not needForRebalance: return v # no need for rebalance
       
-    print('---2-2---')
     # W = rebalance X,Y,Z 
     W = self.rebalance(X,Y,Z)
-    print('W:',W.printNode(True))
     while True:
       Z = W.parent
       if Z is None: # W is root
-        print('W is root')
         self.root = W
         return v 
       heightDiff = self.nodeHeight(Z.left) - self.nodeHeight(Z.right)
@@ -118,12 +111,9 @@ class AVL(BST):
         X = Y.left
       else: X = Y.right
       W = self.rebalance(X,Y,Z)
-      print('W:',W.printNode(True))
       
-    print('---3-1---')
     if W is None: return v # something is wrong
     
-    print('---3-2---')
     # Z is root Node? self.root = W 
       # 루트 노드 변경 
     # (불필요) if Z.parent is None: self.root = W
