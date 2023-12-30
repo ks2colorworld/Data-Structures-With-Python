@@ -4,6 +4,7 @@ class Node:
     self.parent = parent
     self.left = left
     self.right = right
+    self.height = 1 # for AVL BST
     # self.__preorderList=[]
     self.__inorderList=[]
     self.__current=-1
@@ -63,6 +64,12 @@ class Node:
       # print(self.key)
     return A 
   
+  def printNode(self, withHeight:bool=False):
+    x = self
+    if withHeight:
+      return 'node(k:'+str(x.key)+',p:'+str(x.parent)+',l:'+str(x.left)+',r:'+str(x.right)+',height:'+str(x.height)+')'
+    else:
+      return 'node(k:'+str(x.key)+',p:'+str(x.parent)+',l:'+str(x.left)+',r:'+str(x.right)+')'
   
   @property
   def parent(self):
