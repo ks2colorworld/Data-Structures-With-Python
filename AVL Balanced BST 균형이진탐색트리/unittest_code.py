@@ -120,7 +120,7 @@ class TestAVLRotateLeftMethod(unittest.TestCase):
         # print('L:',L) # ['[C]', 'Z', '[A]', 'a', 'X', 'b', '[B]']
         self.assertEqual(str(L), "['[C]', 'Z', '[A]', 'a', 'X', 'b', '[B]']")
         
-# ''' New printNode(), nodeHeight() updateNodeHeight()
+''' New printNode(), nodeHeight() updateNodeHeight()
     n = Node(3)
     print('n:',n.printNode(True)) # node(k:3,p:None,l:None,r:None,height:1)
     N = AVL()
@@ -174,7 +174,99 @@ class TestAVLRotateLeftMethod(unittest.TestCase):
 class TestAVLUtilFuncMethod(unittest.TestCase):
     pass
 
+''' rebalance 1
+A = AVL()
+A.insert(10)
+A.insert(5)
+
+print('root.left.height:',A.nodeHeight(A.root.left), 'root.right.height:',A.nodeHeight(A.root.right))
+print('A:', A) 
+print('A.root:',A.root.printNode(True))
+for x in A:
+    if A.search(x) is A.root:
+        continue
+    print(A.search(x).printNode(True))
+
+print('----')
+A.insert(4)
+
+print('root.left.height:',A.nodeHeight(A.root.left), 'root.right.height:',A.nodeHeight(A.root.right))
+print('A:', A) 
+print('A.root:',A.root.printNode(True))
+for x in A:
+    if A.search(x) is A.root:
+        continue
+    print(A.search(x).printNode(True))
+
+print('----')
+A.insert(7)
+A.insert(11)
+A.insert(14)
+A.insert(20)
+A.insert(21)
+
+print('root.left.height:',A.nodeHeight(A.root.left), 'root.right.height:',A.nodeHeight(A.root.right))
+print('A:', A) 
+print('A.root:',A.root.printNode(True))
+for x in A:
+    if A.search(x) is A.root:
+        continue
+    print(A.search(x).printNode(True))
+
+# '''
+
+''' rebalance 2
+A = AVL()
+A.insert(10)
+A.insert(5)
+A.insert(15)
+A.insert(2)
+A.insert(7)
+A.insert(11)
+A.insert(30)
+A.insert(4)
+A.insert(25)
+A.insert(40)
+
+print('A:', A) # [2, 4, 5, 7, 10, 11, 15, 25, 30, 40]
+print('A.root:',A.root.printNode(True)) # node(k:10,p:None,l:5,r:15,height:4)
+for x in A:
+    if A.search(x) is A.root:
+        continue
+    print(A.search(x).printNode(True))
+# '''
+
+class TestAVLRebalanceMethod(unittest.TestCase):
+    pass
+
 # ''' insert
+A = AVL()
+A.insert(10)
+A.insert(5)
+A.insert(15)
+A.insert(2)
+A.insert(7)
+A.insert(11)
+A.insert(30)
+A.insert(4)
+A.insert(25)
+A.insert(40)
+
+print('A:', A) # [2, 4, 5, 7, 10, 11, 15, 25, 30, 40]
+
+print('----')
+A.insert(27)
+
+print('A:', A) # [2, 4, 5, 7, 10, 11, 15, 25, 27, 30, 40]
+print('[30]:', A.search(27).parent.printNode(True)) # 30 # node(k:30,p:25,l:27,r:40,height:2)
+print('[27]:', A.search(27).printNode(True)) # 27 # node(k:27,p:30,l:None,r:None,height:1)
+
+print('----')
+A.insert(28)
+
+print('A:', A) # 
+print('[27]:', A.search(28).parent.printNode(True)) # 27 # node(k:27,p:30,l:None,r:28,height:2)
+print('[28]:', A.search(28).printNode(True)) # 28 # node(k:28,p:27,l:None,r:None,height:1)
 
 # '''
 
