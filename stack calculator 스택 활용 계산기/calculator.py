@@ -1,3 +1,4 @@
+import string
 import sys
 sys.path.append('../stack 괄호 맞추기')
 from stack import Stack
@@ -31,6 +32,12 @@ def change_to_postfix(infix_string, show_steps=False):
   while token_index < len(infix_string):
     current_token = infix_string[token_index]
     if show_steps : print('current_token : ', current_token)
+
+    # 토큰이 ,(천단위 구분 문자열)이면
+    # if current_token == ',':
+    #   token_index += 1
+    #   continue
+    
     # 토큰이 피연산자(숫자)이면 
     if current_token.isdigit():
       # (추가-여러자리 숫자 처리를 위한 조치) 이전 토큰이 숫자였으면 
@@ -129,7 +136,7 @@ def change_to_postfix(infix_string, show_steps=False):
   # Stack(1-postfix)을 넘겨주고 함수실행을 종료한다
   return stack_for_postfix
 
-def calculate_postfix(stack_postfix, show_steps=False):
+def calculate_postfix(stack_postfix:Stack, show_steps=False):
   print('postfix : ', stack_postfix)
   # 피연산자 스택 준비
   stack_for_operand = Stack()
@@ -175,8 +182,9 @@ def calculate_postfix(stack_postfix, show_steps=False):
   return cal_result
 
 # change_to_postfix() + calculate_postfix()
-def calulate_infix(infix_string, show_steps=False):
-  return calculate_postfix(change_to_postfix(infix_string, show_steps), show_steps)
+def calulate_infix(infix_string:string, show_steps=False, *, with_comma=False):
+  cal_result = calculate_postfix(change_to_postfix(infix_string, show_steps), show_steps)
+  return add_comma(cal_result) if with_comma else cal_result
 
 def show_steps_message(title_string, *steps_message):
   print(f'----{title_string}----')
@@ -184,3 +192,14 @@ def show_steps_message(title_string, *steps_message):
   for msg in steps_message:
     print(msg)
   return
+
+# add comma
+def add_comma(num:int|float):
+  return f"{num:,}"
+
+def remove_comma(string_num:string):
+  clean_string = string_num.replace(',','')
+  if '.' in string_num:
+    return float(clean_string)
+  else:
+    return int(clean_string)
