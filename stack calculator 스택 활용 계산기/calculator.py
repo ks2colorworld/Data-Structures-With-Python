@@ -185,7 +185,7 @@ def calculate_postfix(stack_postfix:Stack, show_steps=False):
   return cal_result
 
 # change_to_postfix() + calculate_postfix()
-def calulate_infix(infix_string:string, show_steps=False, *, with_comma=False):
+def calculate_infix(infix_string:string, show_steps=False, *, with_comma=False):
   cal_result = calculate_postfix(change_to_postfix(infix_string, show_steps), show_steps)
   return add_comma(cal_result) if with_comma else cal_result
 

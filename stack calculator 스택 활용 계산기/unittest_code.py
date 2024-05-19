@@ -1,5 +1,5 @@
 import unittest
-from calculator import add_comma, change_to_postfix,calculate_postfix,calulate_infix, remove_comma
+from calculator import add_comma, change_to_postfix,calculate_postfix,calculate_infix, remove_comma
 
 """ (커밋할 때 주석해제 처리) 
 # infix = '1+2*3' # 123*+ # 7
@@ -56,7 +56,7 @@ class Test16_ErrorCheck(unittest.TestCase):
     input1 = self.input1
     # ValueError가 발생하는지 테스트
     with self.assertRaises(ValueError) as context:
-      calulate_infix(input1)
+      calculate_infix(input1)
     
     self.assertEqual(str(context.exception), "brackets are mismatched")
 
