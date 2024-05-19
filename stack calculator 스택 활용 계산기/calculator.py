@@ -2,7 +2,7 @@ import string
 import sys
 sys.path.append('../stack 괄호 맞추기')
 from stack import Stack
-from match import check_match_brackets
+from match_gpt import check_match_brackets
 
 # infix 형식으로 작성된 표현식을 받아서 
 # postfix 형식으로 변경하여 넘겨주는 함수 
@@ -10,15 +10,18 @@ from match import check_match_brackets
 # 제한 2 : 단항연산자(음수/양수 표시)는 고려하지 않는다
 def change_to_postfix(infix_string, show_steps=False):
   # 넘어온 문자열을 출력하여 표시한다.(확인용)
-  print('infix : ', infix_string)
+  if show_steps : print('infix : ', infix_string)
   
   # 넘어온 문자열의 괄호가 올바르게 되어 있는지 우선 확인한다
   if show_steps : print('Check match brackets first')
   if not check_match_brackets(infix_string, show_steps):
     if show_steps : show_steps_message('error', 'brackets are mismatched')
-    raise ValueError(f"error : brackets are mismatched")
+    raise ValueError(f"brackets are mismatched")
     return None
   if show_steps : print('Verified brackets are matched')
+  
+  # 괄호의 짝을 맞추기 위한 매핑
+  bracket_pairs = {')': '(', '}': '{', ']': '['}
   
   # (추가-여러자리 숫자 처리를 위한 조치) 이전 토큰이 숫자였는지 여부를 저장한다.
   previous_token_is_number = False
@@ -53,7 +56,7 @@ def change_to_postfix(infix_string, show_steps=False):
       continue
     
     # 토큰이 '(' 이면
-    if current_token == '(':
+    if current_token in "({[": # == '(':
       # 해당 토큰을 Stack(2-operator)에 push하고 아래 작업은 더이상 실행하지 않고 다음 토큰에 대한 작업(3)을 다시 진행한다 
       stack_for_operator.push(current_token)
       if show_steps : show_steps_message('2', stack_for_postfix, stack_for_operator)
@@ -61,7 +64,7 @@ def change_to_postfix(infix_string, show_steps=False):
       continue
     
     # 토큰이 ')' 이면
-    if current_token == ')':
+    if current_token in ")}]": # == ')':
       repeat_condition = True
       # 아래 작업(4)을 중단될 때까지 반복한다
       while repeat_condition:
@@ -69,7 +72,7 @@ def change_to_postfix(infix_string, show_steps=False):
           # Stack(2-operator)를 pop한다
           op = stack_for_operator.pop()
           # pop된 연산자가 '('이면
-          if op == '(':
+          if op == bracket_pairs[current_token]: # '(':
             # 작업(4)을 중단한다
             repeat_condition = False
             break
@@ -137,7 +140,7 @@ def change_to_postfix(infix_string, show_steps=False):
   return stack_for_postfix
 
 def calculate_postfix(stack_postfix:Stack, show_steps=False):
-  print('postfix : ', stack_postfix)
+  if show_steps : print('postfix : ', stack_postfix)
   # 피연산자 스택 준비
   stack_for_operand = Stack()
   # 계산완료 결과값
