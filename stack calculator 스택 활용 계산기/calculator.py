@@ -33,16 +33,11 @@ def change_to_postfix(infix_string, show_steps=False):
     if show_steps : print('current_token : ', current_token)
     # 토큰이 피연산자(숫자)이면 
     if current_token.isdigit():
-      # (추가-여러자리 숫자 처리를 위한 조치) 이전 토큰이 숫자였으면 stack_for_postfix.push 대신 
-      # stack_for_postfix.pop해서 현재 토큰을 문자열 붙인 후 다시 push한다.
+      # (추가-여러자리 숫자 처리를 위한 조치) 이전 토큰이 숫자였으면 
+      # stack_for_postfix.pop해서 현재 토큰을 문자열로 연결하여 붙인 후 다시 push한다.
       if previous_token_is_number:
         p_number = stack_for_postfix.pop()
         current_token = p_number+current_token
-        # stack_for_postfix.push(p_number+current_token)
-        # previous_token_is_number = True
-        # if show_steps : show_steps_message('1-1', stack_for_postfix, stack_for_operator)
-        # token_index += 1
-        # continue
       # 해당 토큰을 Stack(1-postfix)에 push하고 아래 작업은 더이상 실행하지 않고 다음 토큰에 대한 작업(3)을 다시 진행한다 
       stack_for_postfix.push(current_token)
       previous_token_is_number = True
