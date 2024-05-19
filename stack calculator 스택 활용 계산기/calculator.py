@@ -19,6 +19,8 @@ def change_to_postfix(infix_string, show_steps=False):
     return None
   if show_steps : print('Verified brackets are matched')
   
+  # (추가-여러자리 숫자 처리를 위한 조치) 이전 토큰이 숫자였는지 여부를 저장한다.
+  previous_token_is_number = False
   # postfix로 변경되어 저장될 Stack(1-postfix)을 준비한다. 
   stack_for_postfix = Stack()
   # postfix로 변경하기 전 피연산자들의 우선순위에 따라 임시 저장할 Stack(2-operator)을 준비한다.
@@ -31,8 +33,19 @@ def change_to_postfix(infix_string, show_steps=False):
     if show_steps : print('current_token : ', current_token)
     # 토큰이 피연산자(숫자)이면 
     if current_token.isdigit():
+      # (추가-여러자리 숫자 처리를 위한 조치) 이전 토큰이 숫자였으면 stack_for_postfix.push 대신 
+      # stack_for_postfix.pop해서 현재 토큰을 문자열 붙인 후 다시 push한다.
+      if previous_token_is_number:
+        p_number = stack_for_postfix.pop()
+        current_token = p_number+current_token
+        # stack_for_postfix.push(p_number+current_token)
+        # previous_token_is_number = True
+        # if show_steps : show_steps_message('1-1', stack_for_postfix, stack_for_operator)
+        # token_index += 1
+        # continue
       # 해당 토큰을 Stack(1-postfix)에 push하고 아래 작업은 더이상 실행하지 않고 다음 토큰에 대한 작업(3)을 다시 진행한다 
       stack_for_postfix.push(current_token)
+      previous_token_is_number = True
       if show_steps : show_steps_message('1', stack_for_postfix, stack_for_operator)
       token_index += 1
       continue
@@ -74,6 +87,8 @@ def change_to_postfix(infix_string, show_steps=False):
     
     # 토큰이 ')' 이면
     if current_token in ('+','-','*','/'):
+      # (추가-여러자리 숫자 처리를 위한 조치) 현재 토큰이 연산자이면 다음 토큰 처리시 현재 토큰이 연산자였음(숫자가 아님)을 알리기 위한 플래그를 남긴다. 
+      previous_token_is_number = False
       # (추가) stack_for_operator이 비어 있으면 현재 토큰을 push하고 다음 토큰에 대한 작업(3)을 다시 진행한다 
       if stack_for_operator.is_empty():
         stack_for_operator.push(current_token)
