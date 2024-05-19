@@ -10,7 +10,7 @@ from match_gpt import check_match_brackets
 # 제한 2 : 단항연산자(음수/양수 표시)는 고려하지 않는다
 def change_to_postfix(infix_string, show_steps=False):
   # 넘어온 문자열을 출력하여 표시한다.(확인용)
-  print('infix : ', infix_string)
+  if show_steps : print('infix : ', infix_string)
   
   # 넘어온 문자열의 괄호가 올바르게 되어 있는지 우선 확인한다
   if show_steps : print('Check match brackets first')
@@ -137,7 +137,7 @@ def change_to_postfix(infix_string, show_steps=False):
   return stack_for_postfix
 
 def calculate_postfix(stack_postfix:Stack, show_steps=False):
-  print('postfix : ', stack_postfix)
+  if show_steps : print('postfix : ', stack_postfix)
   # 피연산자 스택 준비
   stack_for_operand = Stack()
   # 계산완료 결과값
