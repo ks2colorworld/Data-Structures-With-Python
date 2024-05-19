@@ -2,7 +2,7 @@ import string
 import sys
 sys.path.append('../stack 괄호 맞추기')
 from stack import Stack
-from match import check_match_brackets
+from match_gpt import check_match_brackets
 
 # infix 형식으로 작성된 표현식을 받아서 
 # postfix 형식으로 변경하여 넘겨주는 함수 
