@@ -16,7 +16,7 @@ def change_to_postfix(infix_string, show_steps=False):
   if show_steps : print('Check match brackets first')
   if not check_match_brackets(infix_string, show_steps):
     if show_steps : show_steps_message('error', 'brackets are mismatched')
-    raise ValueError(f"error : brackets are mismatched")
+    raise ValueError(f"brackets are mismatched")
     return None
   if show_steps : print('Verified brackets are matched')
   
