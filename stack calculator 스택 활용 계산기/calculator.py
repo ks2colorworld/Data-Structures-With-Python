@@ -20,6 +20,9 @@ def change_to_postfix(infix_string, show_steps=False):
     return None
   if show_steps : print('Verified brackets are matched')
   
+  # 괄호의 짝을 맞추기 위한 매핑
+  bracket_pairs = {')': '(', '}': '{', ']': '['}
+  
   # (추가-여러자리 숫자 처리를 위한 조치) 이전 토큰이 숫자였는지 여부를 저장한다.
   previous_token_is_number = False
   # postfix로 변경되어 저장될 Stack(1-postfix)을 준비한다. 
@@ -53,7 +56,7 @@ def change_to_postfix(infix_string, show_steps=False):
       continue
     
     # 토큰이 '(' 이면
-    if current_token == '(':
+    if current_token in "({[": # == '(':
       # 해당 토큰을 Stack(2-operator)에 push하고 아래 작업은 더이상 실행하지 않고 다음 토큰에 대한 작업(3)을 다시 진행한다 
       stack_for_operator.push(current_token)
       if show_steps : show_steps_message('2', stack_for_postfix, stack_for_operator)
@@ -61,7 +64,7 @@ def change_to_postfix(infix_string, show_steps=False):
       continue
     
     # 토큰이 ')' 이면
-    if current_token == ')':
+    if current_token in ")}]": # == ')':
       repeat_condition = True
       # 아래 작업(4)을 중단될 때까지 반복한다
       while repeat_condition:
@@ -69,7 +72,7 @@ def change_to_postfix(infix_string, show_steps=False):
           # Stack(2-operator)를 pop한다
           op = stack_for_operator.pop()
           # pop된 연산자가 '('이면
-          if op == '(':
+          if op == bracket_pairs[current_token]: # '(':
             # 작업(4)을 중단한다
             repeat_condition = False
             break
