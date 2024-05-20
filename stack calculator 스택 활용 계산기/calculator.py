@@ -1,7 +1,7 @@
 import string
 import sys
 sys.path.append('../stack 괄호 맞추기')
-from stack import Stack
+from stack2 import Stack
 from match_gpt import check_match_brackets
 
 # infix 형식으로 작성된 표현식을 받아서 
