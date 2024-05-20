@@ -37,8 +37,8 @@ print('infix : ', infix)
 print('postfix : ', change_to_postfix(infix))
 print('postfix : ', change_to_postfix(infix).items)
 # print(calculate_infix(infix, True))
-print('result : ', calculate_infix(infix))
-# print('result : ', calculate_infix(infix, with_comma=True))
+# print('result : ', calculate_infix(infix))
+print('result : ', calculate_infix(infix, with_comma=True))
 # print(add_comma(calculate_infix(infix)))
 # print(remove_comma('123,000.000'))
 # print("{:,}".format(calculate_infix(infix))) # old
@@ -100,11 +100,11 @@ class Test17(unittest.TestCase):
     infix4 = '(-100+50)-10'
     infix5 = "{[1000 + -2,000] * 4 - (4 / 2)}"  
     
-    postfix_result1 = '100-50+' # ['100', '-50', '+']
-    postfix_result2 = '100-50-' # ['100', '-50', '-']
-    postfix_result3 = '-10050+-10*' # ['-100', '50', '+', '-10', '*']
-    postfix_result4 = '-10050+10-' # ['-100', '50', '+', '10', '-']
-    postfix_result5 = '1000-2000+4*42/-' # ['1000', '-2000', '+', '4', '*', '4', '2', '/', '-']
+    postfix_result1 = '100,-50,+' # ['100', '-50', '+']
+    postfix_result2 = '100,-50,-' # ['100', '-50', '-']
+    postfix_result3 = '-100,50,+,-10,*' # ['-100', '50', '+', '-10', '*']
+    postfix_result4 = '-100,50,+,10,-' # ['-100', '50', '+', '10', '-']
+    postfix_result5 = '1000,-2000,+,4,*,4,2,/,-' # ['1000', '-2000', '+', '4', '*', '4', '2', '/', '-']
 
     answer1 = 50.0
     answer2 = 150.0
@@ -119,11 +119,11 @@ class Test17(unittest.TestCase):
     postfix5 = change_to_postfix(infix5, False) # stack
     
     # print('postfix : ', change_to_postfix(infix1, False))
-    self.assertEqual(''.join(map(str, postfix1)), postfix_result1)
-    self.assertEqual(''.join(map(str, postfix2)), postfix_result2)
-    self.assertEqual(''.join(map(str, postfix3)), postfix_result3)
-    self.assertEqual(''.join(map(str, postfix4)), postfix_result4)
-    self.assertEqual(''.join(map(str, postfix5)), postfix_result5)
+    self.assertEqual(','.join(map(str, postfix1)), postfix_result1)
+    self.assertEqual(','.join(map(str, postfix2)), postfix_result2)
+    self.assertEqual(','.join(map(str, postfix3)), postfix_result3)
+    self.assertEqual(','.join(map(str, postfix4)), postfix_result4)
+    self.assertEqual(','.join(map(str, postfix5)), postfix_result5)
     
     # print('result : ', calculate_infix(infix1, False))
     # self.assertEqual(calculate_infix(infix1, False), answer1)
@@ -137,7 +137,7 @@ class Test17(unittest.TestCase):
 class Test15(unittest.TestCase):
   def setUp(self) -> None:
     infix = "{[1000 + 2,000] * 4 - (4 / 2)}" # 10002000+4*42/- # 11998.0
-    postfix_result = '10002000+4*42/-' # ['1000', '2000', '+', '4', '*', '4', '2', '/', '-']
+    postfix_result = '1000,2000,+,4,*,4,2,/,-' # ['1000', '2000', '+', '4', '*', '4', '2', '/', '-']
     answer = 11998.0
     
     self.infix = infix
@@ -153,8 +153,7 @@ class Test15(unittest.TestCase):
     postfix = change_to_postfix(infix, False) # stack
     
     # print('postfix : ', change_to_postfix(infix, False))
-    self.assertEqual(''.join(map(str, postfix)), postfix_result)
-    # self.assertEqual(postfix, '123*+')
+    self.assertEqual(','.join(map(str, postfix)), postfix_result)
     
     # print('result : ', calulate_infix(infix, False))
     # self.assertEqual(calulate_infix(infix, False), answer)
@@ -164,7 +163,7 @@ class Test15(unittest.TestCase):
 class Test14(unittest.TestCase):
   def setUp(self) -> None:
     infix = '{12+245}*367' # 12245+367* # 94319.0
-    postfix_result = '12245+367*' # ['12', '245', '+', '367', '*']
+    postfix_result = '12,245,+,367,*' # ['12', '245', '+', '367', '*']
     answer = 94319.0
     
     self.infix = infix
@@ -180,7 +179,7 @@ class Test14(unittest.TestCase):
     postfix = change_to_postfix(infix, False) # stack
     
     # print('postfix : ', change_to_postfix(infix, False))
-    self.assertEqual(''.join(map(str, postfix)), postfix_result)
+    self.assertEqual(','.join(map(str, postfix)), postfix_result)
     # self.assertEqual(postfix, '123*+')
     
     # print('result : ', calulate_infix(infix, False))
@@ -191,7 +190,7 @@ class Test14(unittest.TestCase):
 class Test12(unittest.TestCase):
   def setUp(self) -> None:
     infix = '12,000+3,123' # 15123.0
-    postfix_result = '120003123+' # ['12000', '3123', '+']
+    postfix_result = '12000,3123,+' # ['12000', '3123', '+']
     answer = 15123.0
     
     self.infix = infix
@@ -207,7 +206,7 @@ class Test12(unittest.TestCase):
     postfix = change_to_postfix(infix, False) # stack
     
     # print('postfix : ', change_to_postfix(infix, False))
-    self.assertEqual(''.join(map(str, postfix)), postfix_result)
+    self.assertEqual(','.join(map(str, postfix)), postfix_result)
     # self.assertEqual(postfix, '123*+')
     
     # print('result : ', calulate_infix(infix, False))
@@ -218,7 +217,7 @@ class Test12(unittest.TestCase):
 class Test11(unittest.TestCase):
   def setUp(self) -> None:
     infix = '(1234+2122)+33*432/532+(623*744-811)' # 12342122+33432*532/623744*811-++ # 466083.7969924812
-    postfix_result = '12342122+33432*532/623744*811-++' # ['1234', '2122', '+', '33', '432', '*', '532', '/', '623', '744', '*', '811', '-', '+', '+']
+    postfix_result = '1234,2122,+,33,432,*,532,/,623,744,*,811,-,+,+' # ['1234', '2122', '+', '33', '432', '*', '532', '/', '623', '744', '*', '811', '-', '+', '+']
     answer = 466083.7969924812
     
     self.infix = infix
@@ -234,7 +233,7 @@ class Test11(unittest.TestCase):
     postfix = change_to_postfix(infix, False) # stack
     
     # print('postfix : ', change_to_postfix(infix, False))
-    self.assertEqual(''.join(map(str, postfix)), postfix_result)
+    self.assertEqual(','.join(map(str, postfix)), postfix_result)
     # self.assertEqual(postfix, '123*+')
     
     # print('result : ', calulate_infix(infix, False))
@@ -245,7 +244,7 @@ class Test11(unittest.TestCase):
 class Test10(unittest.TestCase):
   def setUp(self) -> None:
     infix = '(1234+2456)*323+71' # 12342456+323*71+ # 1191941.0
-    postfix_result = '12342456+323*71+' # ['1234', '2456', '+', '323', '*', '71', '+']
+    postfix_result = '1234,2456,+,323,*,71,+' # ['1234', '2456', '+', '323', '*', '71', '+']
     answer = 1191941.0
     
     self.infix = infix
@@ -261,8 +260,7 @@ class Test10(unittest.TestCase):
     postfix = change_to_postfix(infix, False) # stack
     
     # print('postfix : ', change_to_postfix(infix, False))
-    self.assertEqual(''.join(map(str, postfix)), postfix_result)
-    # self.assertEqual(postfix, '123*+')
+    self.assertEqual(','.join(map(str, postfix)), postfix_result)
     
     # print('result : ', calulate_infix(infix, False))
     # self.assertEqual(calulate_infix(infix, False), answer)
@@ -272,7 +270,7 @@ class Test10(unittest.TestCase):
 class Test9(unittest.TestCase):
   def setUp(self) -> None:
     infix = '(12+245)*367' # 12245+367* # 94319
-    postfix_result = '12245+367*' # ['12', '245', '+', '367', '*']
+    postfix_result = '12,245,+,367,*' # ['12', '245', '+', '367', '*']
     answer = 94319
     
     self.infix = infix
@@ -288,7 +286,7 @@ class Test9(unittest.TestCase):
     postfix = change_to_postfix(infix, False) # stack
     
     # print('postfix : ', change_to_postfix(infix, False))
-    self.assertEqual(''.join(map(str, postfix)), postfix_result)
+    self.assertEqual(','.join(map(str, postfix)), postfix_result)
     # self.assertEqual(postfix, '123*+')
     
     # print('result : ', calulate_infix(infix, False))
@@ -299,7 +297,7 @@ class Test9(unittest.TestCase):
 class Test8(unittest.TestCase):
   def setUp(self) -> None:
     infix = '(12*24)+35' # 1224*35+ # 323.0
-    postfix_result = '1224*35+' # ['12', '24', '*', '35', '+']
+    postfix_result = '12,24,*,35,+' # ['12', '24', '*', '35', '+']
     answer = 323.0
     
     self.infix = infix
@@ -315,7 +313,7 @@ class Test8(unittest.TestCase):
     postfix = change_to_postfix(infix, False) # stack
     
     # print('postfix : ', change_to_postfix(infix, False))
-    self.assertEqual(''.join(map(str, postfix)), postfix_result)
+    self.assertEqual(','.join(map(str, postfix)), postfix_result)
     # self.assertEqual(postfix, '123*+')
     
     # print('result : ', calulate_infix(infix, False))
@@ -326,7 +324,7 @@ class Test8(unittest.TestCase):
 class Test7(unittest.TestCase):
   def setUp(self) -> None:
     infix = '12+3' # 123+ # 15
-    postfix_result = '123+' # ['12', '3', '+']
+    postfix_result = '12,3,+' # ['12', '3', '+']
     answer = 15 
     
     self.infix = infix
@@ -342,7 +340,7 @@ class Test7(unittest.TestCase):
     postfix = change_to_postfix(infix, False) # stack
     
     # print('postfix : ', change_to_postfix(infix, False))
-    self.assertEqual(''.join(map(str, postfix)), postfix_result)
+    self.assertEqual(','.join(map(str, postfix)), postfix_result)
     # self.assertEqual(postfix, '123*+')
     
     # print('result : ', calulate_infix(infix, False))
