@@ -24,24 +24,30 @@ from calculator import add_comma, change_to_postfix,calculate_postfix,calculate_
 # (){}[] 괄호 대응 
 # infix = '{12+245}*367' # 12245+367* # 94319
 # infix = "{[1000 + 2,000] * 4 - (4 / 2)}" # 10002000+4*42/- # 11998.0
-infix = "{[1000 + 2,000] * 4 - (4 / 2)})" # error 
+# infix = "{[1000 + 2,000] * 4 - (4 / 2)})" # error 
+
+# infix = '100+-50'
+# infix = '100--50'
+# infix = '(-100+50)*-10'
+# infix = '(-100+50)-10'
+infix = "{[1000 + -2,000] * 4 - (4 / 2)}"  
 
 print('infix : ', infix)
 # print(change_to_postfix(infix, True))
 print('postfix : ', change_to_postfix(infix))
 print('postfix : ', change_to_postfix(infix).items)
-# print(calulate_infix(infix, True))
-print('result : ', calulate_infix(infix))
-# print('result : ', calulate_infix(infix, with_comma=True))
-# print(add_comma(calulate_infix(infix)))
+# print(calculate_infix(infix, True))
+print('result : ', calculate_infix(infix))
+# print('result : ', calculate_infix(infix, with_comma=True))
+# print(add_comma(calculate_infix(infix)))
 # print(remove_comma('123,000.000'))
-# print("{:,}".format(calulate_infix(infix))) # old
-# print(f"{calulate_infix(infix):,}") # >= python3.6
+# print("{:,}".format(calculate_infix(infix))) # old
+# print(f"{calculate_infix(infix):,}") # >= python3.6
 
 # print('postfix : ', change_to_postfix(infix, True))
 # print('postfix : ', change_to_postfix(infix))
-# print('result : ', calulate_infix(infix, True))
-# print('result : ', calulate_infix(infix))
+# print('result : ', calculate_infix(infix, True))
+# print('result : ', calculate_infix(infix))
 # """
 
 # "{[1000 + 2,000] * 4 - (4 / 2)})" # error : brackets are mismatched
@@ -84,6 +90,48 @@ class Test13_comma(unittest.TestCase):
     self.assertEqual(add_comma(input2), output2)
     self.assertEqual(remove_comma(output1), input1)
     self.assertEqual(remove_comma(output2), input2)
+
+# 음수(-) 대응 테스트
+class Test17(unittest.TestCase):
+  def test_1(self):
+    infix1 = '100+-50'
+    infix2 = '100--50'
+    infix3 = '(-100+50)*-10'
+    infix4 = '(-100+50)-10'
+    infix5 = "{[1000 + -2,000] * 4 - (4 / 2)}"  
+    
+    postfix_result1 = '100-50+' # ['100', '-50', '+']
+    postfix_result2 = '100-50-' # ['100', '-50', '-']
+    postfix_result3 = '-10050+-10*' # ['-100', '50', '+', '-10', '*']
+    postfix_result4 = '-10050+10-' # ['-100', '50', '+', '10', '-']
+    postfix_result5 = '1000-2000+4*42/-' # ['1000', '-2000', '+', '4', '*', '4', '2', '/', '-']
+
+    answer1 = 50.0
+    answer2 = 150.0
+    answer3 = 500.0
+    answer4 = -60.0
+    answer5 = -4002.0
+    
+    postfix1 = change_to_postfix(infix1, False) # stack
+    postfix2 = change_to_postfix(infix2, False) # stack
+    postfix3 = change_to_postfix(infix3, False) # stack
+    postfix4 = change_to_postfix(infix4, False) # stack
+    postfix5 = change_to_postfix(infix5, False) # stack
+    
+    # print('postfix : ', change_to_postfix(infix1, False))
+    self.assertEqual(''.join(map(str, postfix1)), postfix_result1)
+    self.assertEqual(''.join(map(str, postfix2)), postfix_result2)
+    self.assertEqual(''.join(map(str, postfix3)), postfix_result3)
+    self.assertEqual(''.join(map(str, postfix4)), postfix_result4)
+    self.assertEqual(''.join(map(str, postfix5)), postfix_result5)
+    
+    # print('result : ', calculate_infix(infix1, False))
+    # self.assertEqual(calculate_infix(infix1, False), answer1)
+    self.assertEqual(calculate_postfix(postfix1, False), answer1)
+    self.assertEqual(calculate_postfix(postfix2, False), answer2)
+    self.assertEqual(calculate_postfix(postfix3, False), answer3)
+    self.assertEqual(calculate_postfix(postfix4, False), answer4)
+    self.assertEqual(calculate_postfix(postfix5, False), answer5)
 
 # "{[1000 + 2,000] * 4 - (4 / 2)}" # 10002000+4*42/- # 11998.0
 class Test15(unittest.TestCase):

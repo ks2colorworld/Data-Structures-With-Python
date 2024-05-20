@@ -92,6 +92,14 @@ def change_to_postfix(infix_string, show_steps=False):
     
     # 토큰이 ')' 이면
     if current_token in ('+','-','*','/'):
+      # (추가2-)previous_token_is_number = False(기본값) 이고, current_token == '-' 일 때
+      if previous_token_is_number == False and current_token == '-':
+        # 음수로 stack_for_postfix에 push한다.
+        stack_for_postfix.push(current_token)
+        previous_token_is_number = True 
+        if show_steps : show_steps_message('4-0', stack_for_postfix, stack_for_operator)
+        token_index += 1
+        continue
       # (추가-여러자리 숫자 처리를 위한 조치) 현재 토큰이 연산자이면 다음 토큰 처리시 현재 토큰이 연산자였음(숫자가 아님)을 알리기 위한 플래그를 남긴다. 
       previous_token_is_number = False
       # (추가) stack_for_operator이 비어 있으면 현재 토큰을 push하고 다음 토큰에 대한 작업(3)을 다시 진행한다 
@@ -149,11 +157,13 @@ def calculate_postfix(stack_postfix:Stack, show_steps=False):
   token_index = 0
   while token_index < len(stack_postfix):
     current_token = stack_postfix[token_index]
+    if show_steps : print('current_token : ', current_token)
     # 토큰이 피연산자이면
-    if current_token.isdigit():
+    if current_token.lstrip('-').isdigit(): # 음수 대응 
       # 피연산자 스택에 push한다
       stack_for_operand.push(current_token)
       token_index += 1
+      if show_steps : show_steps_message('cal(1)', stack_for_operand.items)
       continue
     
     # 토큰이 연산자이면
@@ -162,6 +172,7 @@ def calculate_postfix(stack_postfix:Stack, show_steps=False):
       if len(stack_for_operand) < 2:
         raise ValueError(f"error : operands count < 2 ")
         break
+      if show_steps : show_steps_message('cal(2)', stack_for_operand.items,current_token)
       # 피연산자 스택에서 두번 pop한 후 
       # 첫번째 pop은 오른쪽 / 두번째 pop은 왼쪽 
       right_operand = float(stack_for_operand.pop())
@@ -179,6 +190,7 @@ def calculate_postfix(stack_postfix:Stack, show_steps=False):
       # 계산한 결과값을 피연산자 스택에 push한다
       stack_for_operand.push(temp_result)
       token_index += 1
+      if show_steps : show_steps_message('cal(3-end)', temp_result)
       continue
     
   cal_result = stack_for_operand.pop()
